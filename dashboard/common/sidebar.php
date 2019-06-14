@@ -45,7 +45,8 @@
             <li><a href="../machine_report" id="machine_jobcard"><i class="fa fa-list-alt"></i>Machine-Jobcards</a> </li>
             <li><a href="../ageing" id="ageing"><i class="fa fa-list-alt"></i>Ageing Report</a></li>  
             <li><a href="../jobcard_status" id="jobcard_status"><i class="fa fa-list-alt"></i>Jobcard Status</a></li>
-            <li><a href="../operator_report" id="operator_report"><i class="fa fa-list-alt"></i>Operator</a></li>    
+            <li><a href="../operator_report" id="operator_report"><i class="fa fa-list-alt"></i>Operator</a></li> 
+            <li><a href="../operator_efficiency" id="operator_efficiency"><i class="fa fa-list-alt"></i>Operator Efficiency</a></li>    
           </ul>
          </li> 
 
@@ -61,6 +62,7 @@
           <ul class="treeview-menu">
           <li><a href="../production_dashboard" id="view_dashboard"><i class="fa fa-list-alt"></i>Dashboard</a> </li>
           <li><a href="../datasheet" id="data_sheet"><i class="fa fa-list-alt"></i>Data Sheet</a> </li>
+          <li><a href="../production_status" id="production_status"><i class="fa fa-list-alt"></i>Production Status</a> </li>
           </ul>
          </li> 
 

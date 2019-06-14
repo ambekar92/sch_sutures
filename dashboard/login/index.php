@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_SESSION['schAdminSession'])) {
   //echo "test";
-  echo "<script> window.location='../jobcard';</script>";
+  echo "<script> window.location='../overview';</script>";
 }else{
   //echo $_SESSION['schAdminSession']."_Not working";
 }
@@ -91,8 +91,8 @@ getLogin:function(){
                 $('#status2').hide();
                 $('#status3').hide();
                 window.setTimeout(function () { 
-                  window.location='../jobcard';
-                },3000);
+                  window.location='../overview';
+                },1000);
             }else if(obj.login.infoRes=="D"){
                 $('#status3').slideDown(600);
                 $('#status1').hide();
