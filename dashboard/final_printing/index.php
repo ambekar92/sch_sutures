@@ -54,54 +54,115 @@ tempData.jobcard=
 
 getProductionData:function(){
   debugger;
-    var url=baseURL+"getDataController.php";
-    var status="<?php echo $lp_status; ?>";
-    var wrk_ctr_code="<?php echo $lp_workcenter; ?>"";
+    var url=baseURL+"final_printing/getDataController.php";
+
+    var wrk_ctr_code="<?php echo $lp_workcenter; ?>";
     
-    var myData = {getProductionDe:"getJobPoDetails",status:status,wrk_ctr_code:wrk_ctr_code};
+    var myData = {getlastdept:"getlastdept",wrk_ctr_code:wrk_ctr_code};
 
     $.ajax({
       type:"POST",
       url:url,
       async: false,
       dataType: 'json',
-      cache: false,
-      data:JSON.stringify(myData),
-      contentType: 'application/json',
+      data:myData,
       success: function(obj) {
         debugger;
         var content='';
         $("#getTableContent").html('');
 
-        if(obj.body != ''){
-          for(var i=0;i<obj.length;i++){
-            content +="<tr><td>"+ (i+1) +"</td>"+
-                      "<td class='processCSS'>"+obj[i].Batch_no+"</td>"+
-                      "<td >"+obj[i].Size+"</td>"+
-                      "<td >"+obj[i].Customer+"</td>"+
-                      "<td >"+obj[i].Plan+"</td>"+
-                      "<td >"+obj[i].req_date+"</td>"+
-                      "<td >"+obj[i].req_type+"</td>"+
-                      "<td class='rightAlign'>"+obj[i].ok_qty+"</td>"+
-                      "<td class='rightAlign'>asd</td>"+
-                      "</tr>"
-          }          
-          $("#getTableContent").append(content);
-        }else{
-          content +="<tr><td colspan='22' style='text-align:center;'><b>Data Not Available </b></td></tr>";
-          $("#getTableContent").html(content);
-        }
+        // if(obj.last_dept_details != null){
+        //   for(var i=0;i<obj.last_dept_details.length;i++){
+        //     content +="<tr><td>"+ (i+1) +"</td>"+
+        //               "<td class='processCSS'>"+obj.last_dept_details[i].batch_no+"</td>"+
+        //               "<td >"+obj.last_dept_details[i].fg_code+"</td>"+
+        //               "<td >"+obj.last_dept_details[i].cust_name+"</td>"+
+        //               "<td >"+obj.last_dept_details[i].Plan+"</td>"+
+        //               "<td >"+obj.last_dept_details[i].req_date+"</td>"+
+        //               "<td >"+obj.last_dept_details[i].type+"</td>"+
+        //               "<td class='rightAlign'>"+obj.last_dept_details[i].ok_qty+"</td>"+
+        //               "<td class='rightAlign'>asd</td>"+
+        //               "</tr>"
+        //   }          
+        //   $("#getTableContent").append(content);
+        // }else{
+        //   content +="<tr><td colspan='22' style='text-align:center;'><b>Data Not Available </b></td></tr>";
+        //   $("#getTableContent").html(content);
+        // }
+
+        // $('#getTableContent').DataTable({
+        //      "paging":false,
+        //       "ordering":true,
+        //       "info":true,
+        //       "searching":false,         
+        //       "destroy":true,
+        //   }).clear().draw();
+          
+        var DataTableProject = $('#getTableContent').DataTable( {
+            'paging'      : true,
+            'lengthChange': false,
+            'searching'   : true,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : false,
+            "destroy":true,
+            "data":obj.last_dept_details,   
+            "columns": [    
+              {data:null,"SlNo":false,className: "text-center"},
+             // { data: "wrk_ctr_code"},
+              { data: "batch_no"},
+              { data: "fg_code"},
+              { data: "cust_name"},
+              { data: "plan"},
+              { data: "req_date"},
+              { data: "type"},
+              { data: "ok_qty"},           
+              { data: "true_pass",
+                render: function (data, type, row, meta) {
+                 return '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty+')"> Print</button>';
+                }
+              }
+              ]
+           });
+
+           DataTableProject.on( 'order.dt search.dt', function () {
+            DataTableProject.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                    cell.innerHTML = i+1;
+                } );
+            } ).draw(); 
+
+
+
       }
     });
 },
 reload:function(){
 	location.reload(true);
+},
+
+print_lable:function(ok_qty){
+	alert(ok_qty);
+
+  params  = 'width='+window.outerWidth;
+  params += ', height='+window.outerHeight;
+  params += ', top=0, left=0'
+  params += ', fullscreen=yes,scrollbars: 0';
+   
+   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/dashboard/final_printing/jobQRcode.php?ok="+ok_qty;
+
+   window.open(baseUrl, "MsgWindow", params);
+
+
 }
+
 
 };
 
 $(document).ready(function() {
     debugger;
+
+    $('#getTableContent').DataTable();
+
     $("#final_printing").parent().addClass('active');
     $("#final_printing").parent().parent().closest('.treeview').addClass('active menu-open');
 
@@ -143,10 +204,10 @@ $(document).ready(function() {
    <h4 style="align:center;"> HEALTHIUM MEDTECH PVT LTD BANGALORE </h4>
   </div>    -->
       <div class="panel-body">
-       <div class="table-responsive col-md-12 santh">     
+       <div class="table-responsive col-md-12">     
    
-        <table class="table table-hover table-bordered" id="printTable" border="1">
-          <thead>
+        <table id="getTableContent" class="table table-hover table-bordered">
+            <thead>
             <tr>
               <th>Sl. No.</th>
               <th>JobCard</th>
@@ -158,10 +219,7 @@ $(document).ready(function() {
               <th>OK Quantity</th>
               <th>Action</th>
             </tr>
-          </thead>
-          <tbody id="getTableContent">
-           
-          </tbody>
+            <thead>
         </table>
       </div>
 
