@@ -93,6 +93,18 @@
           </ul>
          </li> 
 
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-qrcode"></i> <span>Label Printing</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../final_printing" id="final_printing"><i class="fa fa-qrcode"></i>Printing</a> </li>
+          </ul>
+         </li> 
+
 
        
       </ul>

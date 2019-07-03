@@ -1,7 +1,6 @@
 <?php include('../common/header.php'); ?>
 <?php include('../common/sidebar.php'); ?>
 
-
 <?php error_reporting(0); ?>
 
 <style type="text/css">
@@ -53,6 +52,7 @@ tempData.jobcard=
 {
 
 getProductionData:function(){
+  alert();
   debugger;
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();
@@ -169,7 +169,7 @@ reload:function(){
 getReasonDropdown:function(val,date,wc){
   debugger;
   var getSelDate=$('#userDateSel').val();
-  if(getDate == getSelDate){
+  if(getDate < getSelDate){
     if(val != 0){
        return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
     }else{

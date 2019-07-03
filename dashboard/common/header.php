@@ -2,10 +2,7 @@
 error_reporting(0);
 session_start(); 
 
-//$prodBaseURL="http://172.16.16.161";
-//$prodBaseURL="https://sutures.supplychainh.com";
-$prodBaseURL="http://13.234.15.249";
-//$prodBaseURL="http://localhost/S/Dashboards";
+include('env_variables.php');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
