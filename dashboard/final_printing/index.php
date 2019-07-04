@@ -54,7 +54,7 @@ tempData.jobcard=
 
 getProductionData:function(){
   debugger;
-    var url=baseURL+"final_printing/getDataController.php";
+    var url="getDataController.php";
 
     var wrk_ctr_code="<?php echo $lp_workcenter; ?>";
     
