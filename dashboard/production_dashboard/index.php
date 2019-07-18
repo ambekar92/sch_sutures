@@ -52,7 +52,6 @@ tempData.jobcard=
 {
 
 getProductionData:function(){
-  alert();
   debugger;
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();

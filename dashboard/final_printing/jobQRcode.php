@@ -34,9 +34,11 @@ tempData.jobcard=
 loadAllJobPO:function(){
   debugger;
   var plantId = $('#plant_id').val();
-  var customer_code="<?php echo $_GET['code']; ?>";
-  var requireDate="<?php echo $_GET['date']; ?>";
-  var size_fg="<?php echo $_GET['fg']; ?>";
+  // var customer_code="<?php echo $_GET['code']; ?>";
+  // var requireDate="<?php echo $_GET['date']; ?>";
+  var ok="<?php echo $_GET['ok']; ?>";
+
+  alert(ok);
 
   var url="getDataController.php";
   var myData={getJobPoDetails:"getJobPoDetails", plant_id:plantId,customer_code:customer_code,requireDate:requireDate,size_fg:size_fg};
@@ -166,9 +168,7 @@ getDateFormate:function(date){  // DB formate date and time to dd-mm-yyyy
 };
 
 $(document).ready(function() {
-    debugger;
-alert();
-    
+    debugger;    
   //   var setDateFormat="dd/mm/yyyy";
   //   $('.datepicker-me').datepicker({
   //       format: setDateFormat,
@@ -184,7 +184,7 @@ alert();
   //   $('#wc_id').val(<?php echo $_GET['wc_id'];?>);
   //   $('#color').css('background-color','#b2ba62');
  	
-  // tempData.jobcard.loadAllJobPO();
+   tempData.jobcard.loadAllJobPO();
 
 });
 
