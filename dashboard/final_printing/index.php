@@ -92,7 +92,7 @@ getProductionData:function(){
               { data: "ok_qty"},           
               { data: "true_pass",
                 render: function (data, type, row, meta) {
-                 return '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty+')"> Print</button>';
+                 return '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty +',\''+ row.fg_code +'\',\''+ row.batch_no+'\')"> Print</button>';
                 }
               }
               ]
@@ -113,16 +113,24 @@ reload:function(){
 	location.reload(true);
 },
 
-print_lable:function(ok_qty){
-	alert(ok_qty);
+print_lable:function(ok_qty, fg_code, batch_no){
+	// alert(ok_qty);
+	// alert(fg_code);
+	 alert(batch_no);
+
+   var res = batch_no.split("_");
+
+  var cardType="TRUE PASS";
+  var series="300S";
 
   params  = 'width='+window.outerWidth;
   params += ', height='+window.outerHeight;
   params += ', top=0, left=0'
   params += ', fullscreen=yes,scrollbars: 0';
    
-   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/dashboard/final_printing/jobQRcode.php?ok="+ok_qty;
+   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
 
+console.log(baseUrl);
    window.open(baseUrl, "MsgWindow", params);
 
 

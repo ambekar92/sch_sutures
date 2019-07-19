@@ -34,39 +34,48 @@ tempData.jobcard=
 loadAllJobPO:function(){
   debugger;
   var ok="<?php echo $_GET['ok']; ?>";
+  var batch="<?php echo $_GET['batch']; ?>";
+  var cardType="<?php echo $_GET['cardType']; ?>";
+  var series="<?php echo $_GET['series']; ?>";
+  var fgcode="<?php echo $_GET['fgcode']; ?>";
+  var content="";
 
-  alert(ok);
-     
+  // alert(ok);
+  // alert(batch);
+  // alert(cardType);
+  // alert(series);
+  // alert(fgcode);
+
+  var doz=(ok/12); // Doz
+  var num_of_cards= doz/10;    // num of cards
+
+  alert(doz);
+  alert(num_of_cards);
+
            
-if(obj.jobPoDetails != null){
+if(ok != null){
 
-for(var i=0;i<obj.jobPoDetails.length;i++){
+  $('#qrContent').html("");
 
+for(var i=0;i<num_of_cards;i++){
+//  content +="DAA";
 
-content='<div class="col-md-3 col-xs-12 jobCard jobCardMd"><div class="row">'+
-'<div class="col-md-4 col-xs-4" style="margin-top: 1%;"><p class="text">'+u+'</p></div>'+
-'<div class="col-md-4 col-xs-4" style="margin-top: 1%;"><p class="text1">'+s+'</p></div>'+
-'<div class="col-md-4 col-xs-4" style="margin-top: 1%;"><p class="text1">'+t+'</p></div></div>'+
-'<div class="row"><div class="col-md-4 col-xs-3" id="'+contentVar+'" style="margin-top: 1%;"></div>'+
-'<div class="col-md-8 col-xs-9 sunContent" style="margin-top: 1%;">'+
-'<p class="sizeCss">Size: '+obj.jobPoDetails[i].fg_code+'</p>'+
-'<p class="sizeCss">B.C. No: '+res[0]+'</p>'+
-// '<p class="sizeCss">S.C. No: '+res[2]+' / '+res[1]+'</p>'+ 
-'<p class="sizeCss">ST. Qty: '+obj.jobPoDetails[i].ord_qty+'&nbsp;&nbsp;&nbsp;&nbsp; S.C. No: '+res[2]+' / '+res[1]+'</p>'+
-'<p class="sizeCss">Customer: '+obj.jobPoDetails[i].cust_name+'</p>'+
-'<p class="sizeCss">Req Date: '+tempData.jobcard.getDateFormate(obj.jobPoDetails[i].req_date)+'</p>'+
-'<p class="sizeCss">Plan: '+obj.jobPoDetails[i].plan+', '+planType+'</p>'+
+content+=  '<div class="col-md-2 col-xs-12 outside">'+
+          '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
+          '<p class="fgCode">'+fgcode +'</p>'+
+          '<p class="truePass">'+ 'TRUEPASS' + '<span>'+'300 S'+'</span></p>'+
+          '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
+          '<p class="qtyDoz">'+'Qty : 1 DOZ'+'</p>'+
+          '</div>'+
+          '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
+          '</div><p class="hidden-xs hidden-md hidden-lg" style="page-break-before: always"> ';
+  }
 
-      $('#qrContent').append(content);
+    $('#qrContent').append(content);
+    //$('#'+contentVar).qrcode(elText);               
+  }
 
-      $('#'+contentVar).qrcode(elText);   
-
-             }
-              
-            }
-        //   } // ajax success ends
-        // });   
-
+            
   },
 reload:function(){
 	   location.reload(true);
@@ -98,7 +107,7 @@ $(document).ready(function() {
 
 </script>
 <style type="text/css">
-canvas{
+/* canvas{
   width: 85px; 
 } 
 p{
@@ -120,7 +129,7 @@ p{
 .sizeCss{
   font-size: 12px !important;
   font-weight: 800;  
-}
+} */
 
 
 /*p{
@@ -132,51 +141,79 @@ p{
 }
 
 @media print {
-   /*.jobCard{
-      width: 100%;      
-    }*/
+  .outside{       
+        margin-left: 26px;   
+        border: 0px solid black;
+        margin-bottom: 30px;
+        border-radius: 1px;
+        box-shadow: 0px 0px 10px 0px #00000052;   
+      }
 
-/*    .sunContent>p{
-        font-weight: 900; 
-    }
-    .subtext{
-        text-transform: uppercase;
-    }
+      .outside{
+         height: 122px;
+         width: 100%;
+         padding: 0px;
+      }
 
-.jobCardMd{
-    height: 160px;
-  }
-*/
+      .inside_large {
+        padding: 0px 0px 0px 10px;
+        margin-top: 0px !important;
+        margin-right: -30px !important;
+      }
+
+      .inside_small {
+        padding: 0px;
+      }
+
+      .fgCode {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .truePass {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      span {
+        padding-left: 32px;
+        font-size: 14px;
+      }
+
+      .batchNo {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .qtyDoz {
+        font-weight: bold;
+      }
+
+      .status {
+        padding-top: 14px;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 10px;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 5px 0px;
+      }
 }
 
-.jobCardMd{
-    border: 0px solid black;
-    margin-bottom: 30px;
-    border-radius: 1px;
-    box-shadow: 0px 0px 10px 0px #00000052;
-  }
+
 
     /* Custom, iPhone Retina */ 
     @media only screen and (min-width : 320px) {
-      .jobCardMd{      
-        margin-left: 0px;
-      }
-      .subtext{
-        font-size: 8px;
-        margin-left: 10%;
-      }
-      .sunContent>p{
-        font-size: 10px;
-      }
-
-      .jobCardMd{
-         height: 120px;
-      }
+     
 
     }
       /* Extra Small Devices, Phones */ 
     @media only screen and (min-width : 480px) {
-
+  /* .jobCardMd{       
+        margin-left: 84px;      
+      } */
     }
 
     /* Small Devices, Tablets */
@@ -191,21 +228,67 @@ p{
 
     /* Large Devices, Wide Screens */
     @media only screen and (min-width : 1200px) {
-      .jobCardMd{       
-        margin-left: 84px;      
+      .outside{       
+        margin-left: 27px;  
+        border: 1px solid black;
+        margin-bottom: 30px;
+        border-radius: 1px;
+        box-shadow: 0px 0px 10px 0px #00000052;    
       }
 
-      .subtext{
-        font-size: 10px !important;
-        margin-left: 10%;
-      }
-      .sunContent>p{
-        font-size: 12px !important;
+      .outside{
+         height: 122px;
+         width: 15%;
+         padding: 0px;
       }
 
-      .jobCardMd{
-         height: 250px;
+      .inside_large {
+        padding: 0px 0px 0px 32px;
+        margin-top: 0px !important;
+        margin-right: -30px !important;
       }
+
+      .inside_small {
+        padding: 0px;
+      }
+
+      .fgCode {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .truePass {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      span {
+        padding-left: 16px;
+
+        font-size: 14px;
+      }
+
+      .batchNo {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .qtyDoz {
+        font-weight: bold;
+      }
+
+      .status {
+        /* padding-top: 8px; */
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 5px 0px;
+      }
+      
 
     }
 
@@ -221,27 +304,32 @@ p{
     <section class="content">
       <div id="qrContent"></div>
 
-      <div class="col-md-4 jobCard jobCardMd">
-         <div class="col-md-12" id="qrcode" style="margin-top: 4%;">xsdxcv</div>
+      <!-- <div class="col-md-2 col-xs-12 outside">
+         <div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">
+            <p class="fgCode">DFFJGJ5654</p>
+            <p class="truePass">TRUEPASS <span>300 S</span></p>
+            <p class="batchNo">BATCH:- 12345</p>
+            <p class="qtyDoz">Qty:- 1 DOZ</p>
+         </div>
+         <div class="col-md-2 col-xs-2  inside_small"><p class="status">APPROVED</p></div>
       </div> 
-      <p class="hidden-md hidden-lg" style="page-break-before: always">
+  
 
-      <div class="col-md-4 jobCard jobCardMd">
-       <div class="col-md-12" id="qrcode1" style="margin-top: 4%;">xcvxcvxcv</div>
+      <div class="col-md-2 outside">
+       <div class="" id="qrcode1" style="margin-top: 4%;">xcvxcvxcv</div>
       </div> 
 
-       <p class="hidden-md hidden-lg" style="page-break-before: always">
 
-      <div class="col-md-4 jobCard jobCardMd">
-       <div class="col-md-12" id="qrcode2" style="margin-top: 4%;"></div>
+      <div class="col-md-2 outside">
+       <div class="" id="qrcode2" style="margin-top: 4%;">asdasd</div>
       </div> 
+  
 
-      <p class="hidden-md hidden-lg" style="page-break-before: always">
+      <div class="col-md-2 outside">
+       <div class="" id="qrcode3" style="margin-top: 4%;">asdasd</div>
+      </div>  -->
+      <!-- <p class="hidden-md hidden-lg" style="page-break-before: always"> -->
 
-      <div class="col-md-4 jobCard jobCardMd">
-       <div class="col-md-12" id="qrcode3" style="margin-top: 4%;"></div>
-      </div> 
-      
     </section>
     <!-- /.content -->
   </div>
