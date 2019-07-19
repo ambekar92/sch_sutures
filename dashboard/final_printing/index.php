@@ -71,33 +71,6 @@ getProductionData:function(){
         var content='';
         $("#getTableContent").html('');
 
-        // if(obj.last_dept_details != null){
-        //   for(var i=0;i<obj.last_dept_details.length;i++){
-        //     content +="<tr><td>"+ (i+1) +"</td>"+
-        //               "<td class='processCSS'>"+obj.last_dept_details[i].batch_no+"</td>"+
-        //               "<td >"+obj.last_dept_details[i].fg_code+"</td>"+
-        //               "<td >"+obj.last_dept_details[i].cust_name+"</td>"+
-        //               "<td >"+obj.last_dept_details[i].Plan+"</td>"+
-        //               "<td >"+obj.last_dept_details[i].req_date+"</td>"+
-        //               "<td >"+obj.last_dept_details[i].type+"</td>"+
-        //               "<td class='rightAlign'>"+obj.last_dept_details[i].ok_qty+"</td>"+
-        //               "<td class='rightAlign'>asd</td>"+
-        //               "</tr>"
-        //   }          
-        //   $("#getTableContent").append(content);
-        // }else{
-        //   content +="<tr><td colspan='22' style='text-align:center;'><b>Data Not Available </b></td></tr>";
-        //   $("#getTableContent").html(content);
-        // }
-
-        // $('#getTableContent').DataTable({
-        //      "paging":false,
-        //       "ordering":true,
-        //       "info":true,
-        //       "searching":false,         
-        //       "destroy":true,
-        //   }).clear().draw();
-          
         var DataTableProject = $('#getTableContent').DataTable( {
             'paging'      : true,
             'lengthChange': false,

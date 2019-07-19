@@ -33,91 +33,15 @@ tempData.jobcard=
 {
 loadAllJobPO:function(){
   debugger;
-  var plantId = $('#plant_id').val();
-  // var customer_code="<?php echo $_GET['code']; ?>";
-  // var requireDate="<?php echo $_GET['date']; ?>";
   var ok="<?php echo $_GET['ok']; ?>";
 
   alert(ok);
+     
+           
+if(obj.jobPoDetails != null){
 
-  var url="getDataController.php";
-  var myData={getJobPoDetails:"getJobPoDetails", plant_id:plantId,customer_code:customer_code,requireDate:requireDate,size_fg:size_fg};
-       $.ajax({
-          type:"POST",
-          url:url,
-          async: false,
-          dataType: 'json',
-          data:myData,
-          success: function(obj){           
-              var content="";
-              $('#qrContent').html('');
-            debugger;
-            if(obj.jobPoDetails != null){
-              //alert(obj.jobPoDetails.length);
-              var i=0;
-              var nextPage='';
+for(var i=0;i<obj.jobPoDetails.length;i++){
 
-      for(var i=0;i<obj.jobPoDetails.length;i++){
-                var elText=null;
-                var contentVar="qrcode"+"_"+i;
-                var u=null,uu=null;
-                var s=null,ss=null;
-                var t=null,tt=null;
-                var planType=null;
-      if(i<(obj.jobPoDetails.length - 1)){  
-        nextPage='<p class="hidden-md hidden-lg" style="page-break-before: always;"></p>';
-      }else{
-        nextPage=''
-      }
-
-                
-      if(obj.jobPoDetails[i].urgent==0){
-        u='Regular';
-        uu='N';
-      }else{
-        u="Urgent"
-        uu='Y';
-      }   
-
-      if(obj.jobPoDetails[i].siliconize==0){
-        s='No Siliconize';
-        ss='N'
-      }else{
-        s="Siliconize";
-        ss='Y'
-      }  
-
-      if(obj.jobPoDetails[i].true_pass==0){
-        t='';
-        tt='N';
-      }else{
-        t="Truepass"
-        tt='Y';
-      }       
-
-planType='';
-console.log(obj.jobPoDetails[i].plan_code);
-
-if(obj.jobPoDetails[i].plan_code ==300){
- planType='Plan 1';
-}
-
-if(obj.jobPoDetails[i].plan_code ==301){
- planType='Plan 2';
-}
-
-if(obj.jobPoDetails[i].plan_code ==302){
- planType='Plan 3';
-}
-
-
-//elText=obj.jobPoDetails[i].customer_code+':'+obj.jobPoDetails[i].order_number+':'+obj.jobPoDetails[i].requireDate+':'+obj.jobPoDetails[i].target_qty+':'+obj.jobPoDetails[i].plan+':'+uu+':'+ss+':'+tt;
-
-elText=obj.jobPoDetails[i].batch_no;
-
-var str=obj.jobPoDetails[i].batch_no;
-var res=str.split("_");
- 
 
 content='<div class="col-md-3 col-xs-12 jobCard jobCardMd"><div class="row">'+
 '<div class="col-md-4 col-xs-4" style="margin-top: 1%;"><p class="text">'+u+'</p></div>'+
@@ -133,8 +57,6 @@ content='<div class="col-md-3 col-xs-12 jobCard jobCardMd"><div class="row">'+
 '<p class="sizeCss">Req Date: '+tempData.jobcard.getDateFormate(obj.jobPoDetails[i].req_date)+'</p>'+
 '<p class="sizeCss">Plan: '+obj.jobPoDetails[i].plan+', '+planType+'</p>'+
 
-// '<p>Remarks: '+obj.jobPoDetails[i].remarks+'</p>'+
-'</div></div></div></div>';   //nextPage     <span class="hidden-md hidden-lg row"></span> 
       $('#qrContent').append(content);
 
       $('#'+contentVar).qrcode(elText);   
@@ -142,8 +64,8 @@ content='<div class="col-md-3 col-xs-12 jobCard jobCardMd"><div class="row">'+
              }
               
             }
-          } // ajax success ends
-        });   
+        //   } // ajax success ends
+        // });   
 
   },
 reload:function(){
@@ -169,20 +91,6 @@ getDateFormate:function(date){  // DB formate date and time to dd-mm-yyyy
 
 $(document).ready(function() {
     debugger;    
-  //   var setDateFormat="dd/mm/yyyy";
-  //   $('.datepicker-me').datepicker({
-  //       format: setDateFormat,
-  //       autoclose: true
-  //   });
-
-  //   var date = new Date();
-  //   var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  //   $('.datepicker-me').datepicker('setDate', today);
-
-  //   $('#comp_id').val(<?php echo $_GET['comp_id'];?>);
-  //   $('#plant_id').val(<?php echo $_GET['plant_id'];?>);
-  //   $('#wc_id').val(<?php echo $_GET['wc_id'];?>);
-  //   $('#color').css('background-color','#b2ba62');
  	
    tempData.jobcard.loadAllJobPO();
 
@@ -312,13 +220,14 @@ p{
     <!-- Main content -->
     <section class="content">
       <div id="qrContent"></div>
-      <!-- <div class="col-md-4 jobCard jobCardMd">
-         <div class="col-md-12" id="qrcode" style="margin-top: 4%;"></div>
+
+      <div class="col-md-4 jobCard jobCardMd">
+         <div class="col-md-12" id="qrcode" style="margin-top: 4%;">xsdxcv</div>
       </div> 
       <p class="hidden-md hidden-lg" style="page-break-before: always">
 
       <div class="col-md-4 jobCard jobCardMd">
-       <div class="col-md-12" id="qrcode1" style="margin-top: 4%;"></div>
+       <div class="col-md-12" id="qrcode1" style="margin-top: 4%;">xcvxcvxcv</div>
       </div> 
 
        <p class="hidden-md hidden-lg" style="page-break-before: always">
@@ -331,7 +240,7 @@ p{
 
       <div class="col-md-4 jobCard jobCardMd">
        <div class="col-md-12" id="qrcode3" style="margin-top: 4%;"></div>
-      </div>  -->
+      </div> 
       
     </section>
     <!-- /.content -->
