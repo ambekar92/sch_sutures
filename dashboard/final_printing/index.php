@@ -116,7 +116,7 @@ reload:function(){
 print_lable:function(ok_qty, fg_code, batch_no){
 	// alert(ok_qty);
 	// alert(fg_code);
-	 alert(batch_no);
+	//  alert(batch_no);
 
    var res = batch_no.split("_");
 

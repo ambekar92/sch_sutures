@@ -49,8 +49,7 @@ loadAllJobPO:function(){
   var doz=(ok/12); // Doz
   var num_of_cards= doz/10;    // num of cards
 
-  alert(doz);
-  alert(num_of_cards);
+
 
            
 if(ok != null){
