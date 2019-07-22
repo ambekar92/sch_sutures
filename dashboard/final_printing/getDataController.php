@@ -93,7 +93,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
     $wrk_ctr_code=$_POST['wrk_ctr_code'];
         
-           $last_dept ="SELECT a.wrk_ctr_code,tb_t_job_card_trans.batch_no,tb_m_jobcard.fg_code,tb_m_jobcard.cust_name,tb_m_jobcard.plan,tb_m_jobcard.req_date,if(tb_m_jobcard.urgent = 0,'REGULAR','URGENT')as type,a.qty as ok_qty,ifnull(sum(b.qty),0)as reject_qty,  date_format(tb_t_job_card_trans.updated_at,'%d-%m-%Y %H:%i:%s')as updated_at FROM `tb_t_job_card_trans`
+           $last_dept ="SELECT a.wrk_ctr_code,tb_t_job_card_trans.batch_no,tb_m_jobcard.fg_code,tb_m_jobcard.cust_name,tb_m_jobcard.Siliconize,tb_m_jobcard.true_pass,tb_m_jobcard.plan,tb_m_jobcard.req_date,if(tb_m_jobcard.urgent = 0,'REGULAR','URGENT')as type,a.qty as ok_qty,ifnull(sum(b.qty),0)as reject_qty,  date_format(tb_t_job_card_trans.updated_at,'%d-%m-%Y %H:%i:%s')as updated_at FROM `tb_t_job_card_trans`
             join tb_m_jobcard on tb_t_job_card_trans.batch_no = tb_m_jobcard.batch_no
             join(SELECT ph.mach_code, ph.batch_no, pi.qty, ph.emp_id, ph.created_at,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=500 ) a on a.batch_no = tb_t_job_card_trans.batch_no and     tb_t_job_card_trans.present_mach=a.mach_code
             left OUTER join(SELECT ph.mach_code, ph.batch_no, pi.qty, ph.emp_id, ph.created_at,ph.wrk_ctr_code FROM `tb_t_prod_h` ph JOIN tb_t_prod_i pi ON pi.batch_no=ph.batch_no AND pi.sl_no=ph.sl_no AND ph.qlty_type_code=502 ) b on b.batch_no = tb_t_job_card_trans.batch_no and tb_t_job_card_trans.present_mach=b.mach_code
@@ -111,6 +111,8 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
                 $ok_qty=$row['ok_qty'];
                 $reject_qty=$row['reject_qty'];
                 $updated_at=$row['updated_at'];
+                $Siliconize=$row['Siliconize'];
+                $true_pass=$row['true_pass'];
 
                 $last_dept_details[]=array('wrk_ctr_code' =>$wrk_ctr_code,
                 'batch_no' =>$batch_no,
@@ -121,7 +123,9 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
                 'type' =>$type,
                 'ok_qty' =>$ok_qty,
                 'reject_qty' =>$reject_qty,
-                'updated_at' =>$updated_at
+                'updated_at' =>$updated_at,
+                'Siliconize' =>$Siliconize,
+                'true_pass' =>$true_pass
                 );
             }  
 

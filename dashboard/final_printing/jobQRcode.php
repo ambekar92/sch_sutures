@@ -67,7 +67,7 @@ content+=  '<div class="col-md-2 col-xs-12 outside">'+
           '<p class="qtyDoz">'+'Qty : 1 DOZ'+'</p>'+
           '</div>'+
           '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
-          '</div><p class="hidden-xs hidden-md hidden-lg" style="page-break-before: always"> ';
+          '</div>';
   }
 
     $('#qrContent').append(content);
@@ -228,7 +228,7 @@ p{
     /* Large Devices, Wide Screens */
     @media only screen and (min-width : 1200px) {
       .outside{       
-        margin-left: 27px;  
+        margin-left: 16px;  
         border: 1px solid black;
         margin-bottom: 30px;
         border-radius: 1px;
@@ -236,15 +236,15 @@ p{
       }
 
       .outside{
-         height: 122px;
+         height: 170px;
          width: 15%;
          padding: 0px;
       }
 
       .inside_large {
-        padding: 0px 0px 0px 32px;
+        /* padding: 0px 0px 0px 32px; */
         margin-top: 0px !important;
-        margin-right: -30px !important;
+        /* margin-right: -30px !important; */
       }
 
       .inside_small {
@@ -252,23 +252,22 @@ p{
       }
 
       .fgCode {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
       }
 
       .truePass {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: bold;
       }
 
       span {
         padding-left: 16px;
-
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .batchNo {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
       }
 
