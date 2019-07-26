@@ -115,6 +115,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
                 $updated_at=$row['updated_at'];
                 $Siliconize=$row['Siliconize'];
                 $true_pass=$row['true_pass'];
+                $series=$row['series'];
 
                 $last_dept_details[]=array('wrk_ctr_code' =>$wrk_ctr_code,
                 'batch_no' =>$batch_no,
@@ -128,7 +129,8 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
                 'reject_qty' =>$reject_qty,
                 'updated_at' =>$updated_at,
                 'Siliconize' =>$Siliconize,
-                'true_pass' =>$true_pass
+                'true_pass' =>$true_pass,
+                'series' =>$series
                 );
             }  
 

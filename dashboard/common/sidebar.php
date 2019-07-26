@@ -105,6 +105,19 @@
           </ul>
          </li> 
 
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-line-chart"></i> <span>OEE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../oee/" id="oee-dashboard"><i class="fa fa-line-chart"></i>Dashboard</a> </li>
+          <li><a href="../oee/oee_history.php" id="oee_history"><i class="fa fa-history"></i>History</a> </li>
+          </ul>
+         </li> 
+
 
        
       </ul>

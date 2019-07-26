@@ -92,7 +92,7 @@ getProductionData:function(){
               { data: "ok_qty"},           
               { data: "true_pass",
                 render: function (data, type, row, meta) {
-                 return '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty +',\''+ row.fg_code +'\',\''+ row.batch_no+'\','+row.Siliconize+','+row.true_pass+')"> Print</button>';
+                 return '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty +',\''+ row.fg_code +'\',\''+ row.batch_no+'\','+row.Siliconize+','+row.true_pass+',\''+row.series+'\')"> Print</button>';
                 }
               }
               ]
@@ -113,7 +113,8 @@ reload:function(){
 	location.reload(true);
 },
 
-print_lable:function(ok_qty, fg_code, batch_no,Siliconize,true_pass){
+print_lable:function(ok_qty, fg_code, batch_no,Siliconize,true_pass,series){
+debugger;
 //var s='';
 var t='';
   
@@ -128,7 +129,7 @@ var t='';
    var res = batch_no.split("_");
 
   var cardType=t;
-  var series="300S";
+  //var series="300S";
 
   params  = 'width='+window.outerWidth;
   params += ', height='+window.outerHeight;

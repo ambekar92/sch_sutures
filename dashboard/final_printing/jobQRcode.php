@@ -62,13 +62,25 @@ for(var i=0;i<num_of_cards;i++){
 content+=  '<div class="col-md-2 col-xs-12 outside">'+
           '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
           '<p class="fgCode">'+fgcode +'</p>'+
-          '<p class="truePass">'+ 'TRUEPASS' + '<span>'+'300 S'+'</span></p>'+
+          '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
           '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
           '<p class="qtyDoz">'+'Qty : 1 DOZ'+'</p>'+
           '</div>'+
           '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
           '</div>';
   }
+
+  
+  content+=  '<div class="col-md-2 col-xs-12 outside">'+
+          '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
+          '<p class="fgCode">'+fgcode +'</p>'+
+          '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
+          '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
+          '<p class="qtyDoz">'+'Qty : '+parseInt(num_of_cards+1)*12+' DOZ</p>'+
+          '</div>'+
+          '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
+          '</div>';
+
 
     $('#qrContent').append(content);
     //$('#'+contentVar).qrcode(elText);               
