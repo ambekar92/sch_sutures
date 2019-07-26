@@ -136,7 +136,7 @@ var t='';
   params += ', top=0, left=0'
   params += ', fullscreen=yes,scrollbars: 0';
    
-   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
+   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sch_sutures/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
 
 console.log(baseUrl);
    window.open(baseUrl, "MsgWindow", params);
