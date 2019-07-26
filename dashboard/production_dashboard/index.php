@@ -1,6 +1,7 @@
 <?php include('../common/header.php'); ?>
 <?php include('../common/sidebar.php'); ?>
 
+
 <?php error_reporting(0); ?>
 
 <style type="text/css">
@@ -51,6 +52,24 @@ if(tempData===null||tempData===undefined){
 tempData.jobcard=
 {
 
+loadTime:function(){
+        for(var j=0; j<= 24; j++){
+          $("#sth").append('<option value='+j+'>'+j+'</option>'); 
+        }
+
+        for(var k=0; k<= 60; k++){
+          $("#stm").append('<option value='+k+'>'+k+'</option>'); 
+        }
+
+        for(var l=0; l<= 24; l++){
+          $("#edh").append('<option value='+l+'>'+l+'</option>'); 
+        }
+
+        for(var m=0; m<= 60; m++){
+          $("#edm").append('<option value='+m+'>'+m+'</option>'); 
+        }
+
+},
 getProductionData:function(){
   debugger;
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
@@ -69,6 +88,7 @@ getProductionData:function(){
       data:JSON.stringify(myData),
       contentType: 'application/json',
       success: function(obj) {
+        //alert();
         debugger;
         $("#getTableContent").html('');
 
@@ -78,6 +98,7 @@ getProductionData:function(){
         for(var i=0; i< reasonArr.length; i++){
           $("#selReason").append('<option value='+reasonArr[i].prod_reas_code+'>'+reasonArr[i].prod_reas_descp+'</option>'); 
         }
+     
 
         var content ='';
         var a=b=c=d=e=f='';
@@ -167,19 +188,52 @@ reload:function(){
 },
 getReasonDropdown:function(val,date,wc){
   debugger;
+  // val = reasons in tb_t_prod_dash_h table
+
   var getSelDate=$('#userDateSel').val();
-  if(getDate < getSelDate){
-    if(val != 0){
-       return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+
+  if( getSelDate < getDate ){
+
+    var a = getDate.split("/");
+    var b = getSelDate.split("/");
+
+    var DBdate = a[2]+'-'+a[1]+'-'+a[0];
+    var SelDate = b[2]+'-'+b[1]+'-'+b[0];;
+
+    const date1 = new Date(DBdate);
+    const date2 = new Date(SelDate);
+    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    console.log(diffDays);
+
+
+    //var diff=getDate-getSelDate;
+
+    if(diffDays==1){//date diff equal to 1
+      // if(val != 0){
+      //  return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+      // }else{
+        return "<button class='btn btn-primary btn-xs' onclick='tempData.jobcard.openModel(\""+date+"\","+wc+");'>Add Reason</button>";
+      // }
     }else{
-      return "<button class='btn btn-primary btn-xs' onclick='tempData.jobcard.openModel(\""+date+"\","+wc+");'>Add Reason</button>";
+
+      if(val != 0){
+       return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+      }else{
+        return "-";
+      }
+
     }
+    
+
   }else{
-    if(val != 0){
-       return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
-    }else{
-      return "-";
-    } 
+
+    // if(val != 0){
+    //    return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+    // }else{     
+     
+      return "-"
+   // } 
   }
 
 },
@@ -191,7 +245,9 @@ openModel:function(date,wc){
   $('#seletedDateRec').val(date);
   $('#seletedWcRec').val(wc);
   $('#add_reason').modal('show');
+  tempData.jobcard.fetchReasons();
 },
+
 openModelWithView:function(date,wc){
   //console.log(prodData);
   debugger;
@@ -218,9 +274,12 @@ saveReason:function(){
   debugger;
   var reasons=$('#selReason').val();
   var remarks=$('#remarks').val();
+  var sth=$('#sth').val();
+  var stm=$('#stm').val();
+  var edh=$('#edh').val();
+  var edm=$('#edm').val();
   var seletedDateRec=$('#seletedDateRec').val();
   var seletedWcRec=$('#seletedWcRec').val();
-
   if(reasons==''){
     $('#msg').html("Please select reason.!");
 		return false;
@@ -235,8 +294,10 @@ saveReason:function(){
     $('#msg').html('');
   }
 
+var start_time = sth+':'+stm;
+var end_time = edh+':'+edm;
   var url='getDataController.php';
-  var myData ={saveReason:"saveReason",reasons:reasons,remarks:remarks,seletedDateRec:seletedDateRec,seletedWcRec:seletedWcRec}
+  var myData ={saveReason:"saveReason",reasons:reasons,remarks:remarks,seletedDateRec:seletedDateRec,seletedWcRec:seletedWcRec,start_time:start_time,end_time:end_time}
   $.ajax({
       type:"POST",
       url:url,
@@ -247,8 +308,40 @@ saveReason:function(){
       contentType: 'application/json',
       success: function(obj) {
         debugger;
-        tempData.jobcard.getProductionData();
-        $('#add_reason').modal('hide');
+        tempData.jobcard.fetchReasons();
+       }
+    });
+},
+fetchReasons:function(){
+  var seletedDateRec=$('#seletedDateRec').val();
+  var seletedWcRec=$('#seletedWcRec').val();
+
+  var url='getDataController.php';
+  var myData ={fetchReasons:"fetchReasons",seletedDateRec:seletedDateRec,seletedWcRec:seletedWcRec}
+  $.ajax({
+      type:"POST",
+      url:url,
+      async: false,
+      dataType: 'json',
+      cache: false,
+      data:JSON.stringify(myData),
+      contentType: 'application/json',
+      success: function(obj) {
+        debugger;
+        var content ='';
+        $("#modaltableData").html('');
+
+        for(var i=0;i<obj.body.length;i++){
+          content +="<tr>"+
+                      "<td class='rightAlign'>"+obj.body[i].reason_code+"</td>"+
+                      "<td class='rightAlign'>"+obj.body[i].start_time+"</td>"+
+                      "<td class='rightAlign'>"+obj.body[i].end_time+"</td>"+
+                      "<td class='rightAlign'>"+obj.body[i].remarks+"</td>"+
+                      "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
+                      "</tr>"        
+         
+       }
+       $("#modaltableData").append(content);
       }
     });
 }
@@ -274,14 +367,13 @@ $(document).ready(function() {
         autoclose: true
     });
 
-
     // Date initialization Jobcard 
     var date = new Date();
     var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     $('#userDateSel').datepicker('setDate', today);
 
     getDate = "<?php echo date("d/m/Y"); ?>";
-
+//alert(getDate);
     //$('#comp_id').val(<?php echo $_GET['comp_id'];?>);
     $('#plant_id').val(<?php echo $_GET['plant_id'];?>);
    //  $('#wc_id').val(<?php echo $_GET['wc_id'];?>);
@@ -294,9 +386,8 @@ $(document).ready(function() {
     $('#commonMsg').hide();
       
     tempData.jobcard.getProductionData();
-
-
-
+    tempData.jobcard.loadTime();
+   
 
     $('#upload_fg_form').on("submit", function(e) {
      // alert();
@@ -348,7 +439,7 @@ $('#print').on('click',function(){
   printData();
 })
 
-
+x
 });
 
 
@@ -666,7 +757,7 @@ function AlertFilesize_fg() {
 
 <!-- Modal reasonArr --> 
 <div id="add_reason" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
 <input type="hidden" id="seletedDateRec">
 <input type="hidden" id="seletedWcRec">
@@ -677,25 +768,77 @@ function AlertFilesize_fg() {
         <h4 class="modal-title"><b>Add Reasons</b></h4>
       </div>
       <div class="modal-body">
-        <p>Select the Reasons</p>
-        <select class="form-control select2"  id="selReason" name="selReason[]"  multiple="multiple" 
-        style="width:60%;" data-placeholder="Reasons">
-        </select>
-      <br><br>
+      <div class="row">
+        <div class="col-md-3">
+          <p>Select the Reasons</p>
+          <select class="form-control select2"  id="selReason" name="selReason"  
+          style="width:100%; display:inline;" data-placeholder="Reasons" >
+          </select>
+        </div>
+        <div class="col-md-2">
+          <p>Start time</p>
+          <div class="row">
+            <div class="col-md-5 col-xs-5">
+              <select class="form-control select2 col-xs-2"  id="sth" name="st"  
+              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+              </select>
+            </div>  
+            <div class="col-md-5 col-xs-5">
+              <select class="form-control select2 col-xs-2"  id="stm" name="st"  
+              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+              </select>
+            </div>  
+        </div>
+        </div> 
+        <div class="col-md-2">
+          <p>End time</p>
+          <div class="row">
+            <div class="col-md-5 col-xs-5">
+              <select class="form-control select2 col-xs-2"  id="edh" name="st"  
+              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+              </select>
+            </div>  
+            <div class="col-md-5 col-xs-5">
+              <select class="form-control select2 col-xs-2"  id="edm" name="st"  
+              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+              </select>
+            </div>  
+          </div>  
+        </div>
+        <div class="col-md-3 col-xs-5">
         <p>Remarks</p>
-        <textarea class="form-control"  id="remarks" name="remarks" style="width:60%;" 
+        <textarea class="form-control"  id="remarks" name="remarks" style="width:100%;" 
         placeholder="Remarks"></textarea>
-
         <br>
         <p id="msg" style="color:red;"></p>
       </div>
-      <div class="modal-footer">
+      <div class="col-md-2 col-xs-5">
+      <br>
+      <br>
       <button type="button" class="btn btn-success btn-sm" id="saveReason"
        onclick="tempData.jobcard.saveReason();";>Save</button>
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
       </div>
+      <div class="table-responsive col-md-12 santh">     
+   
+   <table class="table table-hover table-bordered" id="modaltable" border="1">
+     <thead>
+       <tr>
+         <th rowspan="3">Reason</th>
+         <th rowspan="3">Start time</th>
+         <th rowspan="3">End time</th>
+         <th rowspan="3">Remarks</th>
+         <th rowspan="3">action</th>
+       </tr>
+     </thead>
+     <tbody id="modaltableData">
+      
+     </tbody>
+   </table>
+ </div>
+      </div>
+      </div>
+ 
     </div>
-
   </div>
 </div>
 
