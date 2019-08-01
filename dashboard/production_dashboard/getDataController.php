@@ -93,7 +93,7 @@ if(isset($data['saveReason'])){
 }
 
 
-if(isset($data['fetchReasons'])){
+if(isset($data['fetchReasons'])){  // same function use for VIEW reasons
 
     $seletedDateRec=$data['seletedDateRec'];
     $seletedWcRec=$data['seletedWcRec'];

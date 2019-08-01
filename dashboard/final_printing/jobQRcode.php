@@ -40,35 +40,48 @@ loadAllJobPO:function(){
   var fgcode="<?php echo $_GET['fgcode']; ?>";
   var content="";
 
-  // alert(ok);
-  // alert(batch);
-  // alert(cardType);
-  // alert(series);
-  // alert(fgcode);
-
   var doz=(ok/12); // Doz
-  var num_of_cards= doz/10;    // num of cards
+  var num_of_cards= doz/10;   // num of cards
 
 alert(num_of_cards);
 
-           
-if(ok != null){
 
+
+         
+
+if(ok != null){
   $('#qrContent').html("");
 
-for(var i=0;i<num_of_cards;i++){
+for(var i=1;i<=num_of_cards;i++){
 //  content +="DAA";
 
-content+=  '<div class="col-md-2 col-xs-12 outside">'+
-          '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
-          '<p class="fgCode">'+fgcode +'</p>'+
-          '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
-          '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
-          '<p class="qtyDoz">'+'Qty : 10 DOZ'+'</p>'+
-          '</div>'+
-          '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
-          '</div>';
+  content+= '<div class="col-md-2 col-xs-12 outside">'+
+            '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
+            '<p class="fgCode">'+fgcode +'</p>'+
+            '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
+            '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
+            '<p class="qtyDoz">'+'Qty : 10 DOZ'+'</p>'+
+            '</div>'+
+            '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
+            '</div>';
   }
+
+if(!Number.isInteger(num_of_cards)){
+
+  var decimal = num_of_cards.toString().split(".")[1];
+  alert(decimal[0]);
+  var decimalCard = decimal[0];
+
+  content+=  '<div class="col-md-2 col-xs-12 outside">'+
+            '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
+            '<p class="fgCode">'+fgcode +'</p>'+
+            '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
+            '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
+            '<p class="qtyDoz">'+'Qty : '+decimalCard+' DOZ</p>'+
+            '</div>'+
+            '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
+            '</div>';
+}
 
   
   content+=  '<div class="col-md-2 col-xs-12 outside">'+
@@ -82,8 +95,7 @@ content+=  '<div class="col-md-2 col-xs-12 outside">'+
           '</div>';
 
 
-    $('#qrContent').append(content);
-    //$('#'+contentVar).qrcode(elText);               
+    $('#qrContent').append(content);            
   }
 
             
@@ -313,42 +325,12 @@ p{
     <!-- Main content -->
     <section class="content">
       <div id="qrContent"></div>
-
-      <!-- <div class="col-md-2 col-xs-12 outside">
-         <div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">
-            <p class="fgCode">DFFJGJ5654</p>
-            <p class="truePass">TRUEPASS <span>300 S</span></p>
-            <p class="batchNo">BATCH:- 12345</p>
-            <p class="qtyDoz">Qty:- 1 DOZ</p>
-         </div>
-         <div class="col-md-2 col-xs-2  inside_small"><p class="status">APPROVED</p></div>
-      </div> 
-  
-
-      <div class="col-md-2 outside">
-       <div class="" id="qrcode1" style="margin-top: 4%;">xcvxcvxcv</div>
-      </div> 
-
-
-      <div class="col-md-2 outside">
-       <div class="" id="qrcode2" style="margin-top: 4%;">asdasd</div>
-      </div> 
-  
-
-      <div class="col-md-2 outside">
-       <div class="" id="qrcode3" style="margin-top: 4%;">asdasd</div>
-      </div>  -->
-      <!-- <p class="hidden-md hidden-lg" style="page-break-before: always"> -->
-
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
-  <?php //include('../common/footer.php'); ?>
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <!-- <div class="control-sidebar-bg"></div> -->
+
 </div>
 <!-- ./wrapper -->
 

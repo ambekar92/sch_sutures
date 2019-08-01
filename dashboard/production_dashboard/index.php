@@ -89,6 +89,7 @@ loadTime:function(){
 getProductionData:function(){
   debugger;
     var url=baseURL+"sutures_api/Jobcards/readprod_dash_filedata.php";
+    // var url="localhost/sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();
 
     var res = date_.split("/");
@@ -188,7 +189,7 @@ getProductionData:function(){
                       "<td class='rightAlign'>"+obj.body[i].planned_cards+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].backlogs+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].avg_cards+"</td>"+
-                      "<td class='rightAlign'>"+tempData.jobcard.getReasonDropdown(obj.body[i].reasons,obj.body[i].date,obj.body[i].work_ctr_code)+"</td>"+
+                      "<td class='rightAlign'>"+tempData.jobcard.getReasonDropdown(obj.body[i].reasons,obj.body[i].date,obj.body[i].work_ctr_code,obj.body[i].process)+"</td>"+
                       "</tr>"
           }          
           $("#getTableContent").append(content);
@@ -202,9 +203,10 @@ getProductionData:function(){
 reload:function(){
 	location.reload(true);
 },
-getReasonDropdown:function(val,date,wc){
+getReasonDropdown:function(val,date,wc,process){
   debugger;
   // val = reasons in tb_t_prod_dash_h table
+
 
   var getSelDate=$('#userDateSel').val();
 
@@ -239,12 +241,12 @@ getReasonDropdown:function(val,date,wc){
       // if(val != 0){
       //  return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
       // }else{
-        return "<button class='btn btn-primary btn-xs' onclick='tempData.jobcard.openModel(\""+date+"\","+wc+");'>Add Reason</button>";
+        return "<button class='btn btn-primary btn-xs' onclick='tempData.jobcard.openModel(\""+date+"\","+wc+",\""+process+"\");'>Add Reason</button>";
       // }
     }else{
 
       if(val != 0){
-       return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+       return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+",\""+process+"\");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
       }else{
         return "-";
       }
@@ -263,9 +265,24 @@ getReasonDropdown:function(val,date,wc){
   }
 
 },
-openModel:function(date,wc){
+openModel:function(date,wc,process){
+  $('#titleNameR').html(process);
+
   $('#selReason').val('');
   $('#selReason').val('').trigger("change");
+
+  $('#sth').val('');
+  $('#sth').val('').trigger("change");
+
+  $('#stm').val('');
+  $('#stm').val('').trigger("change");
+
+  $('#edh').val('');
+  $('#edh').val('').trigger("change");
+
+  $('#edm').val('');
+  $('#edm').val('').trigger("change");
+
   $('#remarks').val('');
   
   $('#seletedDateRec').val(date);
@@ -274,7 +291,10 @@ openModel:function(date,wc){
   tempData.jobcard.fetchReasons();
 },
 
-openModelWithView:function(date,wc){
+openModelWithView:function(date,wc,process){
+
+  $('#titleNameV').html(process);
+
   //console.log(prodData);
   debugger;
   var content='';
@@ -337,6 +357,8 @@ var end_time = edh+':'+edm;
         tempData.jobcard.fetchReasons();
        }
     });
+
+
 },
 fetchReasons:function(){
   var seletedDateRec=$('#seletedDateRec').val();
@@ -356,6 +378,7 @@ fetchReasons:function(){
         debugger;
         var content ='';
         $("#modaltableData").html('');
+        $("#viewReasonData").html('');
 
         if(obj.body !=null){
         for(var i=0;i<obj.body.length;i++){
@@ -364,15 +387,22 @@ fetchReasons:function(){
                       "<td class='rightAlign'>"+obj.body[i].start_time+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].end_time+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].remarks+"</td>"+
-                      "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
+                      // "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
                       "</tr>" ;                
        }      
       }else{
         content +="<tr>"+
-                      "<td colspan='5' style='text-align:center;'>No Data</td>"+
-                      "</tr>";  
+                  "<td colspan='5' style='text-align:center;'>No Data</td>"+
+                  "</tr>";  
       }
+      
       $("#modaltableData").append(content);
+      $("#viewReasonData").append(content);
+
+
+
+
+
 
       }
     });
@@ -388,10 +418,15 @@ validateTime:function(){
   var edh =$('#edh').val();
   var edm =$('#edm').val();
 
+  startdate = getSelDate + ' '+ sth +':'+stm + ':' + '00';
+  enddate =  getSelDate + ' '+ edh +':'+edm + ':' + '00';
 
+ if( startdate < enddate ) {
+  tempData.jobcard.saveReason();
+ }else {
+  alert("Start time is more than end time");
+ }
 
-  alert(edh);
-  alert(edm);
 
 }
 
@@ -813,7 +848,7 @@ function AlertFilesize_fg() {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><b>Add Reasons</b></h4>
+        <h4 class="modal-title"><b><span id="titleNameR"></span></b></h4>
       </div>
       <div class="modal-body">
       <div class="row">
@@ -828,7 +863,7 @@ function AlertFilesize_fg() {
           <div class="row">
             <div class="col-md-5 col-xs-5 removePading">
               <select class="form-control select2 col-xs-2"  id="sth" name="sth"  
-              style="width:100%;  display:inline;" data-placeholder="Reasons" >
+              style="width:100%;  display:inline;" data-placeholder="00">
               </select>
             </div>
             <div class="col-md-1 col-xs-1 removePading specialCss">
@@ -836,7 +871,7 @@ function AlertFilesize_fg() {
             </div>
             <div class="col-md-5 col-xs-5 removePading">
               <select class="form-control select2 col-xs-2"  id="stm" name="stm"  
-              style="width:100%;  display:inline;" data-placeholder="Reasons" >
+              style="width:100%;  display:inline;" data-placeholder="00">
               </select>
             </div>  
         </div>
@@ -846,7 +881,7 @@ function AlertFilesize_fg() {
           <div class="row">
             <div class="col-md-5 col-xs-5 removePading">
               <select class="form-control select2 col-xs-2"  id="edh" name="edh"  
-              style="width:100%;  display:inline;" data-placeholder="Reasons" onchange="tempData.jobcard.validateTime();">
+              style="width:100%;  display:inline;" data-placeholder="00">
               </select>
             </div>  
             <div class="col-md-1 col-xs-1 removePading specialCss">
@@ -854,7 +889,7 @@ function AlertFilesize_fg() {
             </div>
             <div class="col-md-5 col-xs-5 removePading">
               <select class="form-control select2 col-xs-2"  id="edm" name="edm"  
-              style="width:100%;  display:inline;" data-placeholder="Reasons" onchange="tempData.jobcard.validateTime();">
+              style="width:100%;  display:inline;" data-placeholder="00">
               </select>
             </div>  
           </div>  
@@ -870,7 +905,7 @@ function AlertFilesize_fg() {
       <br>
       <br>
       <button type="button" class="btn btn-success btn-sm" id="saveReason"
-       onclick="tempData.jobcard.saveReason();";>Save</button>
+       onclick="tempData.jobcard.validateTime();";>Save</button>
       </div>
       <div class="table-responsive col-md-12 santh">     
    
@@ -881,7 +916,7 @@ function AlertFilesize_fg() {
          <th rowspan="3">Start time</th>
          <th rowspan="3">End time</th>
          <th rowspan="3">Remarks</th>
-         <th rowspan="3">action</th>
+         <!-- <th rowspan="3">action</th> -->
        </tr>
      </thead>
      <tbody id="modaltableData">
@@ -905,14 +940,26 @@ function AlertFilesize_fg() {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><b>View Reason</b></h4>
+        <h4 class="modal-title"><b><span id="titleNameV"></span></b></h4>
       </div>
       <div class="modal-body">
-        <p><b>Reasons</b></p>
-        <p><span id="viewReasons"></span></p>
-        <br>
-        <p><b>Remarks</b></p>
-        <p><span id="viewRemarks"></span></p>
+
+
+<table class="table table-hover table-bordered" id="modaltable" border="1">
+     <thead>
+       <tr>
+         <th rowspan="3">Reason</th>
+         <th rowspan="3">Start time</th>
+         <th rowspan="3">End time</th>
+         <th rowspan="3">Remarks</th>
+         <!-- <th rowspan="3">action</th> -->
+       </tr>
+     </thead>
+     <tbody id="viewReasonData">
+      
+     </tbody>
+   </table>
+      
        
       </div>
       <div class="modal-footer">
