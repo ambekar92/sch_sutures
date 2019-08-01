@@ -49,7 +49,7 @@ loadAllJobPO:function(){
   var doz=(ok/12); // Doz
   var num_of_cards= doz/10;    // num of cards
 
-
+alert(num_of_cards);
 
            
 if(ok != null){
@@ -64,7 +64,7 @@ content+=  '<div class="col-md-2 col-xs-12 outside">'+
           '<p class="fgCode">'+fgcode +'</p>'+
           '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
           '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
-          '<p class="qtyDoz">'+'Qty : 1 DOZ'+'</p>'+
+          '<p class="qtyDoz">'+'Qty : 10 DOZ'+'</p>'+
           '</div>'+
           '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
           '</div>';
@@ -76,7 +76,7 @@ content+=  '<div class="col-md-2 col-xs-12 outside">'+
           '<p class="fgCode">'+fgcode +'</p>'+
           '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
           '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
-          '<p class="qtyDoz">'+'Qty : '+parseInt(num_of_cards+1)*12+' DOZ</p>'+
+          '<p class="qtyDoz">'+'Qty : '+parseInt(doz)+' DOZ</p>'+
           '</div>'+
           '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
           '</div>';

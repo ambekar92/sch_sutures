@@ -34,6 +34,17 @@
   .processCSS{
     font-weight:600;
   }
+
+  .removePading{
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+  .specialCss{
+    font-weight: bold;
+    margin-top: 6px;
+    padding-left: 3px;
+  }
  
 </style>
 
@@ -51,28 +62,33 @@ if(tempData===null||tempData===undefined){
 
 tempData.jobcard=
 {
-
+addZero:function(num) {
+  if (num < 10) {
+      num = "0" + num;
+  }
+  return num;
+},
 loadTime:function(){
         for(var j=0; j<= 24; j++){
-          $("#sth").append('<option value='+j+'>'+j+'</option>'); 
+          $("#sth").append('<option value='+tempData.jobcard.addZero(j)+'>'+tempData.jobcard.addZero(j)+'</option>'); 
         }
 
         for(var k=0; k<= 60; k++){
-          $("#stm").append('<option value='+k+'>'+k+'</option>'); 
+          $("#stm").append('<option value='+tempData.jobcard.addZero(k)+'>'+tempData.jobcard.addZero(k)+'</option>'); 
         }
 
         for(var l=0; l<= 24; l++){
-          $("#edh").append('<option value='+l+'>'+l+'</option>'); 
+          $("#edh").append('<option value='+tempData.jobcard.addZero(l)+'>'+tempData.jobcard.addZero(l)+'</option>'); 
         }
 
         for(var m=0; m<= 60; m++){
-          $("#edm").append('<option value='+m+'>'+m+'</option>'); 
+          $("#edm").append('<option value='+tempData.jobcard.addZero(m)+'>'+tempData.jobcard.addZero(m)+'</option>'); 
         }
 
 },
 getProductionData:function(){
   debugger;
-    var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
+    var url=baseURL+"sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();
 
     var res = date_.split("/");
@@ -192,7 +208,17 @@ getReasonDropdown:function(val,date,wc){
 
   var getSelDate=$('#userDateSel').val();
 
-  if( getSelDate < getDate ){
+  var aa = getDate.split("/");
+  var bb = getSelDate.split("/");
+
+  var getSelDateNew = aa[2]+'-'+aa[1]+'-'+aa[0];
+  var getDateNew = bb[2]+'-'+bb[1]+'-'+bb[0];
+
+
+  const date11 = new Date(getSelDateNew);
+  const date22 = new Date(getDateNew);
+
+  if( date22 < date11 ){
 
     var a = getDate.split("/");
     var b = getSelDate.split("/");
@@ -204,7 +230,7 @@ getReasonDropdown:function(val,date,wc){
     const date2 = new Date(SelDate);
     const diffTime = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    console.log(diffDays);
+    //console.log(diffDays);
 
 
     //var diff=getDate-getSelDate;
@@ -331,6 +357,7 @@ fetchReasons:function(){
         var content ='';
         $("#modaltableData").html('');
 
+        if(obj.body !=null){
         for(var i=0;i<obj.body.length;i++){
           content +="<tr>"+
                       "<td class='rightAlign'>"+obj.body[i].reason_code+"</td>"+
@@ -338,12 +365,34 @@ fetchReasons:function(){
                       "<td class='rightAlign'>"+obj.body[i].end_time+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].remarks+"</td>"+
                       "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
-                      "</tr>"        
-         
-       }
-       $("#modaltableData").append(content);
+                      "</tr>" ;                
+       }      
+      }else{
+        content +="<tr>"+
+                      "<td colspan='5' style='text-align:center;'>No Data</td>"+
+                      "</tr>";  
+      }
+      $("#modaltableData").append(content);
+
       }
     });
+},
+validateTime:function(){
+  debugger;
+
+  var getSelDate=$('#userDateSel').val();
+  
+  var sth =$('#sth').val();
+  var stm =$('#stm').val();
+
+  var edh =$('#edh').val();
+  var edm =$('#edm').val();
+
+
+
+  alert(edh);
+  alert(edm);
+
 }
 
 };
@@ -439,7 +488,6 @@ $('#print').on('click',function(){
   printData();
 })
 
-x
 });
 
 
@@ -778,14 +826,17 @@ function AlertFilesize_fg() {
         <div class="col-md-2">
           <p>Start time</p>
           <div class="row">
-            <div class="col-md-5 col-xs-5">
-              <select class="form-control select2 col-xs-2"  id="sth" name="st"  
-              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+            <div class="col-md-5 col-xs-5 removePading">
+              <select class="form-control select2 col-xs-2"  id="sth" name="sth"  
+              style="width:100%;  display:inline;" data-placeholder="Reasons" >
               </select>
-            </div>  
-            <div class="col-md-5 col-xs-5">
-              <select class="form-control select2 col-xs-2"  id="stm" name="st"  
-              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+            </div>
+            <div class="col-md-1 col-xs-1 removePading specialCss">
+            :
+            </div>
+            <div class="col-md-5 col-xs-5 removePading">
+              <select class="form-control select2 col-xs-2"  id="stm" name="stm"  
+              style="width:100%;  display:inline;" data-placeholder="Reasons" >
               </select>
             </div>  
         </div>
@@ -793,14 +844,17 @@ function AlertFilesize_fg() {
         <div class="col-md-2">
           <p>End time</p>
           <div class="row">
-            <div class="col-md-5 col-xs-5">
-              <select class="form-control select2 col-xs-2"  id="edh" name="st"  
-              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+            <div class="col-md-5 col-xs-5 removePading">
+              <select class="form-control select2 col-xs-2"  id="edh" name="edh"  
+              style="width:100%;  display:inline;" data-placeholder="Reasons" onchange="tempData.jobcard.validateTime();">
               </select>
             </div>  
-            <div class="col-md-5 col-xs-5">
-              <select class="form-control select2 col-xs-2"  id="edm" name="st"  
-              style="width:150%;  display:inline;" data-placeholder="Reasons" >
+            <div class="col-md-1 col-xs-1 removePading specialCss">
+            :
+            </div>
+            <div class="col-md-5 col-xs-5 removePading">
+              <select class="form-control select2 col-xs-2"  id="edm" name="edm"  
+              style="width:100%;  display:inline;" data-placeholder="Reasons" onchange="tempData.jobcard.validateTime();">
               </select>
             </div>  
           </div>  
