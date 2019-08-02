@@ -247,6 +247,8 @@ getReasonDropdown:function(val,date,wc,process){
 
       if(val != 0){
        return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+",\""+process+"\");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+      // return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.fetchReasons();'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
+      
       }else{
         return "-";
       }
@@ -291,30 +293,75 @@ openModel:function(date,wc,process){
   tempData.jobcard.fetchReasons();
 },
 
-openModelWithView:function(date,wc,process){
+openModelWithView:function(date,wc,process,){
 
   $('#titleNameV').html(process);
 
   //console.log(prodData);
   debugger;
-  var content='';
-  for(var i=0;i<prodData.length;i++){
-    if(date==prodData[i].date && wc==prodData[i].work_ctr_code){
+  // var content='';
+  // for(var i=0;i<prodData.length;i++){
+  //   if(date==prodData[i].date && wc==prodData[i].work_ctr_code){
       
-       var str = prodData[i].reasons;
-       var res = str.split(",");
-       for(var j=0;j<res.length;j++){
-        content+=' <span class="btn btn-primary" style="margin-bottom: 1%;">'+res[j]+'</span> &nbsp;';
-       }
+  //      var str = prodData[i].reasons;
+  //      var res = str.split(",");
+  //      for(var j=0;j<res.length;j++){
+  //       content+=' <span class="btn btn-primary" style="margin-bottom: 1%;">'+res[j]+'</span> &nbsp;';
+  //      }
 
-      $('#viewReasons').html(content);
-      $('#viewRemarks').html(prodData[i].remarks);   
+  //     $('#viewReasons').html(content);
+  //     $('#viewRemarks').html(prodData[i].remarks);   
       
+  //     $('#prod_data').modal('show');
+
+  //   }
+  // }
+  
+  var seletedDateRec=date;
+  var seletedWcRec=wc;
+
+  // $('#titleNameV').html(seletedWcRec);
+
+  var url='getDataController.php';
+  var myData ={fetchReasons:"fetchReasons",seletedDateRec:seletedDateRec,seletedWcRec:seletedWcRec}
+  $.ajax({
+      type:"POST",
+      url:url,
+      async: false,
+      dataType: 'json',
+      cache: false,
+      data:JSON.stringify(myData),
+      contentType: 'application/json',
+      success: function(obj) {
+        debugger;
+        var content ='';
+  
+        $("#viewReasonData").html('');
+
+        if(obj.body !=null){
+        for(var i=0;i<obj.body.length;i++){
+          content +="<tr>"+
+                      "<td class='rightAlign'>"+obj.body[i].reason_code+"</td>"+
+                      "<td class='rightAlign'>"+obj.body[i].start_time+"</td>"+
+                      "<td class='rightAlign'>"+obj.body[i].end_time+"</td>"+
+                      "<td class='rightAlign'>"+obj.body[i].remarks+"</td>"+
+                      // "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
+                      "</tr>" ;                
+       }      
+      }else{
+        content +="<tr>"+
+                  "<td colspan='5' style='text-align:center;'>No Data</td>"+
+                  "</tr>";  
+      }
+      
+      $("#viewReasonData").append(content);
+
+
       $('#prod_data').modal('show');
 
-    }
-  }
-  
+
+      }
+    });
 },
 saveReason:function(){
   debugger;
@@ -334,7 +381,7 @@ saveReason:function(){
   }
 
   if(remarks==''){
-    $('#msg').html("Please enter remarks.!");
+    $('#msg').html("Please enter remarks!");
 		return false;
   }else{
     $('#msg').html('');
@@ -353,8 +400,14 @@ var end_time = edh+':'+edm;
       data:JSON.stringify(myData),
       contentType: 'application/json',
       success: function(obj) {
-        debugger;
+        if(obj.status == 1){
+          $('#reasonmsg').html('');
         tempData.jobcard.fetchReasons();
+        }else{
+          $('#reasonmsg').html("Reason already exists!");
+          // alert("Reason Is already selected")
+        }
+        
        }
     });
 
@@ -422,9 +475,11 @@ validateTime:function(){
   enddate =  getSelDate + ' '+ edh +':'+edm + ':' + '00';
 
  if( startdate < enddate ) {
+  $('#endtimemsg').html('');
   tempData.jobcard.saveReason();
  }else {
-  alert("Start time is more than end time");
+  $('#endtimemsg').html("Start time is more than end time.!");
+  // alert("Start time is more than end time");
  }
 
 
@@ -857,6 +912,8 @@ function AlertFilesize_fg() {
           <select class="form-control select2"  id="selReason" name="selReason"  
           style="width:100%; display:inline;" data-placeholder="Reasons" >
           </select>
+          <br>
+        <p id="reasonmsg" style="color:red;"></p>
         </div>
         <div class="col-md-2">
           <p>Start time</p>
@@ -892,7 +949,9 @@ function AlertFilesize_fg() {
               style="width:100%;  display:inline;" data-placeholder="00">
               </select>
             </div>  
-          </div>  
+          </div> 
+          <br>
+              <p id="endtimemsg" style="color:red;"></p> 
         </div>
         <div class="col-md-3 col-xs-5">
         <p>Remarks</p>

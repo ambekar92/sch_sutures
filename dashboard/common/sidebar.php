@@ -63,6 +63,7 @@
           <li><a href="../production_dashboard" id="view_dashboard"><i class="fa fa-list-alt"></i>Dashboard</a> </li>
           <li><a href="../datasheet" id="data_sheet"><i class="fa fa-list-alt"></i>Data Sheet</a> </li>
           <li><a href="../production_status" id="production_status"><i class="fa fa-list-alt"></i>Production Status</a> </li>
+          <li><a href="../reason_report" id="reason_report"><i class="fa fa-list-alt"></i>Reason Report</a> </li>
           </ul>
          </li> 
 

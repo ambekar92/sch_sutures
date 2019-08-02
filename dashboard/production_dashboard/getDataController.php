@@ -87,7 +87,13 @@ if(isset($data['saveReason'])){
     
     $insert_sql = mysqli_insert_array($table_insrt,$datainsert,"submit");
     $result2=mysqli_query($con,$insert_sql); 
-    $status['status'] = 1;
+
+    if($result1 &&  $result2 ){
+        $status['status'] = 1;
+    }else{
+        $status['status'] = 0;
+    }
+    // $status['status'] = 1;
     echo json_encode($status);
     mysqli_close($con);
 }

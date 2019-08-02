@@ -213,7 +213,7 @@ p{
       }
 
       .status {
-        padding-top: 14px;
+        padding-top: 12px;
         writing-mode: vertical-rl;
         text-orientation: upright;
         font-size: 10px;
@@ -267,7 +267,7 @@ p{
 
       .inside_large {
         /* padding: 0px 0px 0px 32px; */
-        margin-top: 0px !important;
+        margin-top: 12px !important;
         /* margin-right: -30px !important; */
       }
 
@@ -300,7 +300,7 @@ p{
       }
 
       .status {
-        /* padding-top: 8px; */
+        padding-top: 26px;
         writing-mode: vertical-rl;
         text-orientation: upright;
         font-size: 12px;
