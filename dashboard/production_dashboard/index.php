@@ -5,8 +5,8 @@
 <?php error_reporting(0); ?>
 
 <style type="text/css">
-  .rightAlign{
-    text-align:right;
+  .leftAlign{
+    text-align:left;
   }
   .actualCard{
     background-color: #f3dbdb;
@@ -341,10 +341,10 @@ openModelWithView:function(date,wc,process,){
         if(obj.body !=null){
         for(var i=0;i<obj.body.length;i++){
           content +="<tr>"+
-                      "<td class='rightAlign'>"+obj.body[i].reason_code+"</td>"+
-                      "<td class='rightAlign'>"+obj.body[i].start_time+"</td>"+
-                      "<td class='rightAlign'>"+obj.body[i].end_time+"</td>"+
-                      "<td class='rightAlign'>"+obj.body[i].remarks+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].reason_code+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].start_time+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].end_time+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].remarks+"</td>"+
                       // "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
                       "</tr>" ;                
        }      
@@ -436,10 +436,10 @@ fetchReasons:function(){
         if(obj.body !=null){
         for(var i=0;i<obj.body.length;i++){
           content +="<tr>"+
-                      "<td class='rightAlign'>"+obj.body[i].reason_code+"</td>"+
-                      "<td class='rightAlign'>"+obj.body[i].start_time+"</td>"+
-                      "<td class='rightAlign'>"+obj.body[i].end_time+"</td>"+
-                      "<td class='rightAlign'>"+obj.body[i].remarks+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].reason_code+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].start_time+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].end_time+"</td>"+
+                      "<td class='leftAlign'>"+obj.body[i].remarks+"</td>"+
                       // "<td class='rightAlign'>"+"<button type='button'>Delete</button>"+"</td>"+
                       "</tr>" ;                
        }      

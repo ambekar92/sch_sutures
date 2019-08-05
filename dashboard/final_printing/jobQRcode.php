@@ -32,7 +32,7 @@ if(tempData===null||tempData===undefined){
 tempData.jobcard=
 {
 loadAllJobPO:function(){
-  debugger;
+  // debugger;
   var ok="<?php echo $_GET['ok']; ?>";
   var batch="<?php echo $_GET['batch']; ?>";
   var cardType="<?php echo $_GET['cardType']; ?>";
@@ -43,11 +43,7 @@ loadAllJobPO:function(){
   var doz=(ok/12); // Doz
   var num_of_cards= doz/10;   // num of cards
 
-alert(num_of_cards);
-
-
-
-         
+      
 
 if(ok != null){
   $('#qrContent').html("");
@@ -67,12 +63,11 @@ for(var i=1;i<=num_of_cards;i++){
   }
 
 if(!Number.isInteger(num_of_cards)){
-
+debugger;
   var decimal = num_of_cards.toString().split(".")[1];
-  alert(decimal[0]);
   var decimalCard = decimal[0];
-
-  content+=  '<div class="col-md-2 col-xs-12 outside">'+
+  if(decimalCard != 0){
+    content+=  '<div class="col-md-2 col-xs-12 outside">'+
             '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
             '<p class="fgCode">'+fgcode +'</p>'+
             '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
@@ -81,6 +76,7 @@ if(!Number.isInteger(num_of_cards)){
             '</div>'+
             '<div class="col-md-2 col-xs-2  inside_small"><p class="status">'+'APPROVED'+'</p></div>'+
             '</div>';
+  }
 }
 
   
@@ -122,7 +118,7 @@ getDateFormate:function(date){  // DB formate date and time to dd-mm-yyyy
 };
 
 $(document).ready(function() {
-    debugger;    
+    // debugger;    
  	
    tempData.jobcard.loadAllJobPO();
 
