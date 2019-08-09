@@ -469,6 +469,24 @@ if(isset($_POST['getCustomerDetails'])){
     mysqli_close($con);
 }
 
+
+if(isset($_POST['getBatchDetails'])){
+
+
+    $eqQ="SELECT batch_no FROM tb_m_jobcard";
+    $eqDetails=mysqli_query($con,$eqQ) or die('Error:'.mysqli_error($con));
+    
+    while ($row=mysqli_fetch_array($eqDetails)){
+           $batch_no=$row['batch_no'];
+           $getBatchData[]=array('batch_no' =>"$batch_no");
+        
+    }
+    $status['batchData'] = $getBatchData;
+    echo json_encode($status);
+    mysqli_close($con);
+}
+
+
 if(isset($_POST['getPlanTypeDetails'])){
     $plant_id=$_POST['plant_id'];
 
@@ -511,9 +529,13 @@ if(isset($_POST['getSizeFgDetails'])){
 if(isset($_POST['getSearchData'])){
    
     $plant_id=$_POST['plant_id'];
-    $customer_code=$_POST['customer_name'];
-    $size=$_POST['size_fg'];
-       
+    
+   $customer_code=$_POST['customer_name'];
+   $size=$_POST['size_fg'];
+   $batch_no=$_POST['batch_no'];
+   $plan=$_POST['plan'];
+   $planType=$_POST['planType'];
+
     $s_to= explode("/",$_POST['s_to']);// getting only Dateval
     $s_to= $s_to[2].'-'.$s_to[1].'-'.$s_to[0];
 
@@ -523,20 +545,46 @@ if(isset($_POST['getSearchData'])){
 // echo $plant_id;
 // echo $size;
 // die;
-    if($customer_code != '0' && $size != 0) {
-        $condition = " jc.plnt_code=".$plant_id." AND jc.cust_code='".$customer_code."' 
-         AND jc.req_date BETWEEN '".$s_from."' AND '".$s_to."'  AND jc.part_fg_id=".$size;
-    }else if($customer_code != '0'){
-        $condition = " jc.plnt_code=".$plant_id." AND jc.cust_code='".$customer_code."' 
-         AND jc.req_date BETWEEN '".$s_from."' AND '".$s_to."'";
-    }else if($size != 0){
-        $condition = " jc.plnt_code=".$plant_id." 
-         AND jc.req_date BETWEEN '".$s_from."' AND '".$s_to."'  AND jc.part_fg_id=".$size;
-    }else{
-        $condition = " jc.plnt_code=".$plant_id." 
-         AND jc.req_date BETWEEN '".$s_from."' AND '".$s_to."' ";
-    }  
-
+if($batch_no != '0'){
+   $condition = " jc.batch_no='".$batch_no."'";
+}else{
+    if($customer_code != '0'  && $size != '0' && $plan!='0' && $planType !='0' ) {
+        $condition = "jc.cust_code='".$customer_code."' AND jc.fg_code = '".$size."' AND jc.plan = '".$plan."' AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code != '0'  && $size == '0' && $plan=='0' && $planType =='0' ){
+        $condition = "jc.cust_code='".$customer_code."'";
+    }elseif($customer_code == '0'  && $size != '0' && $plan =='0' && $planType =='0' ){
+       $condition = "jc.fg_code = '".$size."'";
+    }elseif($customer_code == '0'  && $size == '0' && $plan!='0' && $planType =='0' ){
+        $condition = "jc.plan = '".$plan."'";
+    }elseif($customer_code == '0'  && $size == '0' && $plan=='0' && $planType !='0' ){
+        $condition = "jc.plan_code = '".$planType."' ";
+    }elseif($customer_code != '0'  && $size != '0' && $plan=='0' && $planType =='0' ){
+        $condition = "jc.cust_code='".$customer_code."' AND jc.fg_code = '".$size."'";
+    }elseif($customer_code != '0'  && $size == '0' && $plan!='0' && $planType =='0' ){
+        $condition = "jc.cust_code='".$customer_code."' AND jc.plan = '".$plan."'";
+    }elseif($customer_code != '0'  && $size == '0' && $plan=='0' && $planType !='0' ){
+        $condition = "jc.cust_code='".$customer_code."' AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code != '0'  && $size != '0' && $plan!='0' && $planType =='0' ){
+        $condition = "jc.cust_code='".$customer_code."' AND jc.fg_code = '".$size."' AND jc.plan = '".$plan."' ";
+    }elseif($customer_code != '0'  && $size == '0' && $plan!='0' && $planType !='0' ){
+        $condition = "jc.cust_code='".$customer_code."'AND jc.plan = '".$plan."' AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code != '0'  && $size != '0' && $plan=='0' && $planType !='0' ){
+        $condition = "jc.cust_code='".$customer_code."' AND jc.fg_code = '".$size."' AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code == '0'  && $size != '0' && $plan!='0' && $planType !='0' ){
+        $condition = "jc.fg_code = '".$size."' AND jc.plan = '".$plan."' AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code == '0'  && $size == '0' && $plan!='0' && $planType !='0' ){
+        $condition = "jc.plan = '".$plan."' AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code == '0'  && $size != '0' && $plan!='0' && $planType =='0' ){
+        $condition = "jc.fg_code = '".$size."' AND jc.plan = '".$plan."'";
+    }elseif($customer_code == '0'  && $size != '0' && $plan=='0' && $planType !='0' ){
+        $condition = "jc.fg_code = '".$size."'AND jc.plan_code = '".$planType."' ";
+    }elseif($customer_code != '0'  && $size == '0' && $plan!='0' && $planType =='0' ){
+        $condition = "jc.cust_code='".$customer_code." 'AND jc.plan = '".$plan."' ";
+    }elseif($customer_code != '0'  && $size == '0' && $plan=='0' && $planType !='0' ){
+        $condition = " jc.cust_code='".$customer_code."' AND jc.plan_code = '".$planType."' ";
+    }
+    
+}
     $eqQ="SELECT batch_no,plnt_code,fg_code,cust_code,cust_name,plan,plan_code,
     ord_qty,total_qty,req_date,urgent,siliconize,true_pass,remarks,total_qty_yield FROM tb_m_jobcard jc 
     WHERE ".$condition." group by fg_code,cust_name,req_date,batch_no,plnt_code";

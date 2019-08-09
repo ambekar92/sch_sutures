@@ -328,6 +328,29 @@ if(data!=undefined){
         } 
     });
   },
+
+  getBatchDropdown:function(){
+    var url="getDataController.php";
+    var myData = {getBatchDetails:'getBatchDetails'};
+    $.ajax({
+      type:"POST",
+      url:url,
+      async: false,
+      dataType: 'json',
+      cache: false,
+      data:myData,
+      success: function(obj) {
+        if(obj.batchData !=null){
+           $("#batch_no").html('');
+            $("#batch_no").append('<option value="0"> Select Batch No </option>');
+            for(var i=0; i< obj.batchData.length; i++){
+             $("#batch_no").append('<option value="'+obj.batchData[i].batch_no+'">'+obj.batchData[i].batch_no+'</option>'); 
+            }
+          }
+        } 
+    });
+  },
+
   getPlanTypeDropdown:function(){
     var url="getDataController.php";
     var plant_id = $('#plant_id').val();
@@ -346,10 +369,17 @@ if(data!=undefined){
             for(var i=0; i< obj.planData.length; i++){
              $("#plan_type").append('<option value="'+obj.planData[i].plan_code+'">'+obj.planData[i].plan_desc+'</option>'); 
             }
+
+            $("#plan_type_serach").html('');
+            $("#plan_type_serach").append('<option value="0"> Select Plan Type </option>');
+            for(var i=0; i< obj.planData.length; i++){
+             $("#plan_type_serach").append('<option value="'+obj.planData[i].plan_code+'">'+obj.planData[i].plan_desc+'</option>'); 
+            }
           }
         } 
     });
   },
+
 confrimJobCard:function(){
   debugger;
       Gcode=null;
@@ -631,13 +661,22 @@ getQtyValYield:function(val){
 },
 getSearchData:function(){
     var url="getDataController.php";
+    var batch_no = $('#batch_no').val();
+    
+    var plan1 = $('#planSearch').val();
+    if(plan1 == ''){
+      var plan = 0;
+    }else{
+      var plan = plan1;
+    }
+    var planType = $('#plan_type_serach').val();
     var plant_id = $('#plant_id').val();
     var customer_name=$('#s_cust_name').val();
     var size_fg=$('#s_fg_code').val();
     var s_to=$('#s_to').val();
     var s_from=$('#s_from').val();
-    var myData = {getSearchData:'getSearchData', plant_id:plant_id,customer_name:customer_name,size_fg:size_fg,s_to:s_to,s_from:s_from};
-
+    var myData = {getSearchData:'getSearchData', plant_id:plant_id,customer_name:customer_name,size_fg:size_fg,s_to:s_to,s_from:s_from,batch_no:batch_no,plan:plan,planType:planType};
+    debugger;
     $.ajax({
       type:"POST",
       url:url,
@@ -646,6 +685,7 @@ getSearchData:function(){
       cache: false,
       data:myData,
       success: function(obj) {
+        debugger;
         GJobCardData=null;
            GJobCardData = obj.jobPoDetails;
            tempData.jobcard.loadSearchTable(obj.jobPoDetails);
@@ -689,7 +729,7 @@ loadSearchTable:function(data){
                   return view;
                 }
               },//addOneDate
-              //{ data: "requireDate"}, 
+              { data: "batch_no"}, 
               { data: "req_date",className: "text-left",
                 render: function (data, type, row, meta) {
                   var date=tempData.jobcard.addOneDate(row.req_date);
@@ -968,6 +1008,14 @@ date.setDate(date.getDate());
     startDate:date
   });
 
+
+  $('#planSearch').datepicker({
+    format: "MM-yyyy",
+    viewMode: "months", 
+    minViewMode: "months"
+    // startDate:date
+  });
+
   var setDateFormat="dd/mm/yyyy";
   $('#s_to').datepicker({
       format: setDateFormat,
@@ -1003,7 +1051,9 @@ date.setDate(date.getDate());
   
  tempData.jobcard.getCustomerDataDropdown();
  tempData.jobcard.getSizeFgDropdown();
- tempData.jobcard.getPlanTypeDropdown();
+ tempData.jobcard.getPlanTypeDropdown(); 
+ tempData.jobcard.getBatchDropdown(); 
+
 
  $('#createReasons').click(function(){
     $('#searchJobCardID').hide();
@@ -1297,6 +1347,18 @@ tempData.jobcard.loadSearchTable();
               </div>
 
               <div class="row" style="margin-top: 2%;">
+
+              <div class="col-md-6">
+                  <label class="control-label col-md-4 col-sm-6 col-xs-12"> Batch No </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <select class="form-control select2"  id="batch_no" name="batch_no">
+                        </select>
+                      </div>
+                    </div>
+                </div>
+
+
                 <div class="col-md-6">
                   <label class="control-label col-md-4 col-sm-6 col-xs-12"> Customer </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -1307,6 +1369,7 @@ tempData.jobcard.loadSearchTable();
                     </div>
                 </div>
 
+
                 <div class="col-md-6">
                    <label class="control-label col-md-4 col-sm-6 col-xs-12">Size </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -1316,6 +1379,31 @@ tempData.jobcard.loadSearchTable();
                       </div>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                   <label class="control-label col-md-4 col-sm-6 col-xs-12">Plan</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class='col-md-12 input-group date'>
+                      <input type="text" name="planSearch" id="planSearch" placeholder="Plan" 
+                      class="form-control" required="true" style="cursor: pointer;" readonly="readonly"/>
+                       <label class="input-group-addon btn" for="planSearch">
+                            <span class="glyphicon glyphicon-calendar"></span>               
+                        </label>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" style="margin-top: 16px;">
+                   <label class="control-label col-md-4 col-sm-6 col-xs-12">Plan Type</label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <select class="form-control select2"  id="plan_type_serach" name="plan_type">
+                        </select>
+                      </div>
+                    </div>
+                </div>
+
+                
               </div>
                 
               <div class="col-md-12 text-center">
@@ -1326,7 +1414,7 @@ tempData.jobcard.loadSearchTable();
                   </button>
               </div>
               
-              </div>              
+            </div>              
           </form>
         </div>
       <div class="col-sm-12" style="margin-top: 3%;"> 
@@ -1336,6 +1424,7 @@ tempData.jobcard.loadSearchTable();
              <tr>
               <th>Sl.No</th>
               <th>Action</th>
+              <th>Batch No</th>
               <th>Required Date</th>              
               <th>Customer</th>
               <!-- <th>B.C No.</th>
