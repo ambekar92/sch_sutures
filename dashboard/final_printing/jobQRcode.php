@@ -99,6 +99,26 @@ debugger;
 reload:function(){
 	   location.reload(true);
 },
+
+updateStatus:function(){
+
+var url="getDataController.php";
+var batch="<?php echo $_GET['batch']; ?>";
+var myData = {updateStatus:"updateStatus", batch:batch};
+
+$.ajax({
+  type:"POST",
+  url:url,
+  async: false,
+  dataType: 'json',
+  data:myData,
+  success: function(obj) {
+    debugger;
+   // alert("works");
+    }
+  });
+},
+
 clearForm:function(){
     $('#reason_type_id').val(0).change();  
     $("#fromJobCard").fadeToggle("slow");
@@ -121,8 +141,10 @@ $(document).ready(function() {
     // debugger;    
  	
    tempData.jobcard.loadAllJobPO();
+   tempData.jobcard.updateStatus();
 
 });
+
 
 </script>
 <style type="text/css">
@@ -161,7 +183,7 @@ p{
 
 @media print {
   .outside{       
-        margin-left: 26px;   
+        margin-left: 0px;   
         border: 0px solid black;
         margin-bottom: 30px;
         border-radius: 1px;
@@ -169,8 +191,8 @@ p{
       }
 
       .outside{
-         height: 122px;
-         width: 100%;
+         height: 120px;
+         width:50%;
          padding: 0px;
       }
 

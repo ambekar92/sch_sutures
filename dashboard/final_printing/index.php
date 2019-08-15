@@ -92,7 +92,19 @@ getProductionData:function(){
               { data: "ok_qty"},           
               { data: "true_pass",
                 render: function (data, type, row, meta) {
-                 return '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty +',\''+ row.fg_code +'\',\''+ row.batch_no+'\','+row.Siliconize+','+row.true_pass+',\''+row.series+'\')"> Print</button>';
+                  debugger;
+                  var b='';
+
+                  var a = '<button type="button" class="btn btn-primary btn-xs" onclick="tempData.jobcard.print_lable('+ row.ok_qty +',\''+ row.fg_code +'\',\''+ row.batch_no+'\','+row.Siliconize+','+row.true_pass+',\''+row.series+'\')"> Print</button>';
+                  // b = '<button type="button" class="btn btn-warning btn-xs">'+row.print_count+'</button>';
+                  var c = '<button type="button" class="btn btn-success btn-xs"> <i class="fa fa-check"></i> </button>';
+
+                  var final = '';
+                  if(row.print_status == 1){
+                    final = c;                
+                  }
+                  return  a + " " + b + " " + final;
+                 
                 }
               }
               ]
