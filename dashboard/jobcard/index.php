@@ -660,6 +660,7 @@ getQtyValYield:function(val){
   
 },
 getSearchData:function(){
+  $(".loader").fadeIn("slow");
     var url="getDataController.php";
     var batch_no = $('#batch_no').val();
     
@@ -685,7 +686,7 @@ getSearchData:function(){
       cache: false,
       data:myData,
       success: function(obj) {
-        debugger;
+        $(".loader").fadeOut("slow");
         GJobCardData=null;
            GJobCardData = obj.jobPoDetails;
            tempData.jobcard.loadSearchTable(obj.jobPoDetails);
