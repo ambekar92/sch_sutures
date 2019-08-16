@@ -585,6 +585,9 @@ if($batch_no != '0'){
     }
     
 }
+
+if($condition != ''){
+
     $eqQ="SELECT batch_no,plnt_code,fg_code,cust_code,cust_name,plan,plan_code,
     ord_qty,total_qty,req_date,urgent,siliconize,true_pass,remarks,total_qty_yield FROM tb_m_jobcard jc 
     WHERE ".$condition." group by fg_code,cust_name,req_date,batch_no,plnt_code";
@@ -627,11 +630,20 @@ if($batch_no != '0'){
                             'total_qty_yield' =>$total_qty_yield
                             );
     }
+
     
     $status['jobPoDetails'] = $getEQData;
     echo json_encode($status);
     mysqli_close($con);
+}else{
+    $status['jobPoDetails'] = [];
+    echo json_encode($status);
 }
+
+
+}
+
+
 // Search Job Card with id and other
 if(isset($_POST['getViewJobCardData'])){
    
