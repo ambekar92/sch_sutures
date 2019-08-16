@@ -87,7 +87,7 @@ loadTime:function(){
 
 },
 getProductionData:function(){
-  debugger;
+  
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
     // var url="localhost/sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();
@@ -106,7 +106,7 @@ getProductionData:function(){
       contentType: 'application/json',
       success: function(obj) {
         //alert();
-        debugger;
+        
         $("#getTableContent").html('');
 
         reasonArr=obj.reasons;
@@ -189,7 +189,7 @@ getProductionData:function(){
                       "<td class='rightAlign'>"+obj.body[i].planned_cards+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].backlogs+"</td>"+
                       "<td class='rightAlign'>"+obj.body[i].avg_cards+"</td>"+
-                      "<td class='rightAlign'>"+tempData.jobcard.getReasonDropdown(obj.body[i].reasons,obj.body[i].date,obj.body[i].work_ctr_code,obj.body[i].process)+"</td>"+
+                      "<td class='rightAlign'>"+tempData.jobcard.getReasonDropdown(obj.body[i].reasons,obj.body[i].date,obj.body[i].work_ctr_code,obj.body[i].process,obj.date[0].date)+"</td>"+
                       "</tr>"
           }          
           $("#getTableContent").append(content);
@@ -203,22 +203,32 @@ getProductionData:function(){
 reload:function(){
 	location.reload(true);
 },
-getReasonDropdown:function(val,date,wc,process){
+getReasonDropdown:function(val,date,wc,process,hdate){
   debugger;
   // val = reasons in tb_t_prod_dash_h table
 
+  var holiday = hdate;
 
   var getSelDate=$('#userDateSel').val();
 
+  var status=$('#status').text();
+  
+
+
+
   var aa = getDate.split("/");
   var bb = getSelDate.split("/");
+  
+  
 
   var getSelDateNew = aa[2]+'-'+aa[1]+'-'+aa[0];
   var getDateNew = bb[2]+'-'+bb[1]+'-'+bb[0];
+  
 
 
   const date11 = new Date(getSelDateNew);
   const date22 = new Date(getDateNew);
+  const date33 = new Date(holiday);
 
   if( date22 < date11 ){
 
@@ -233,26 +243,34 @@ getReasonDropdown:function(val,date,wc,process){
     const diffTime = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
     //console.log(diffDays);
+    const holidiff = Math.abs(date22.getTime() - date33.getTime());
+    const holidiffrnc =  Math.ceil(holidiff / (1000 * 60 * 60 * 24)); 
 
 
     //var diff=getDate-getSelDate;
 
-    if(diffDays==1){//date diff equal to 1
+    if(diffDays==1 && status == 'Working'){//date diff equal to 1
       // if(val != 0){
       //  return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
       // }else{
         return "<button class='btn btn-primary btn-xs' onclick='tempData.jobcard.openModel(\""+date+"\","+wc+",\""+process+"\");'>Add Reason</button>";
       // }
     }else{
-
+     
+     if(holidiffrnc == 0 && status == 'Working'){
+      return "<button class='btn btn-primary btn-xs' onclick='tempData.jobcard.openModel(\""+date+"\","+wc+",\""+process+"\");'>Add Reason</button>";
+     }else{
       if(val != 0){
+
        return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.openModelWithView(\""+date+"\","+wc+",\""+process+"\");'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
       // return "<button class='btn btn-warning btn-xs' onclick='tempData.jobcard.fetchReasons();'><i class='fa fa-eye' style='color:black;'></i> &nbsp;View</button>";
       
       }else{
-        return "-";
-      }
 
+        return "-";
+
+      }
+     }
     }
     
 
@@ -298,7 +316,7 @@ openModelWithView:function(date,wc,process,){
   $('#titleNameV').html(process);
 
   //console.log(prodData);
-  debugger;
+  
   // var content='';
   // for(var i=0;i<prodData.length;i++){
   //   if(date==prodData[i].date && wc==prodData[i].work_ctr_code){
@@ -333,7 +351,7 @@ openModelWithView:function(date,wc,process,){
       data:JSON.stringify(myData),
       contentType: 'application/json',
       success: function(obj) {
-        debugger;
+        
         var content ='';
   
         $("#viewReasonData").html('');

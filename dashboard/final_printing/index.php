@@ -54,6 +54,7 @@ tempData.jobcard=
 
 getProductionData:function(){
   debugger;
+  
     var url="getDataController.php";
 
     var wrk_ctr_code="<?php echo $lp_workcenter; ?>";
@@ -126,7 +127,7 @@ reload:function(){
 },
 
 print_lable:function(ok_qty, fg_code, batch_no,Siliconize,true_pass,series){
-debugger;
+
 //var s='';
 var t='';
   
@@ -148,11 +149,13 @@ var t='';
   params += ', top=0, left=0'
   params += ', fullscreen=yes,scrollbars: 0';
    
-   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sch_sutures/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
+   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
 
 console.log(baseUrl);
    window.open(baseUrl, "MsgWindow", params);
-
+   
+   setTimeout(function(){ tempData.jobcard.getProductionData(); }, 3000);
+   
 
 }
 
@@ -160,7 +163,7 @@ console.log(baseUrl);
 };
 
 $(document).ready(function() {
-    debugger;
+
 
     $('#getTableContent').DataTable();
 
