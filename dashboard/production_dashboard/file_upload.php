@@ -278,40 +278,43 @@ function fillStockData($date){
     
     require '../common/db.php';
     
-        
+    $sql="SELECT W.wrk_ctr_desc,W.wrk_ctr_code, ifnull(C.regular_RB,0) as regular_RB ,ifnull(D.regular_CT,0) as regular_CT,ifnull(A.urgent_RB,0)as urgent_RB ,ifnull(B.urgent_CT,0) as urgent_CT  FROM tb_o_workcenter  W
+LEFT OUTER JOIN(select count(jct.batch_no) as urgent_RB,jct.to_dept  from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 1
+join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB'
+join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+where jc.oper_status is null group by jct.to_dept) A on A.to_dept = W.wrk_ctr_code
+LEFT OUTER JOIN(select count(jct.batch_no) as urgent_CT,jct.to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 1
+join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT'
+join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+where jc.oper_status is null group by jct.to_dept) B on B.to_dept = W.wrk_ctr_code
+LEFT OUTER JOIN(select count(jct.batch_no) as regular_RB,jct.to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 0
+join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB'
+join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+where jc.oper_status is null group by jct.to_dept) C on C.to_dept = W.wrk_ctr_code
+LEFT OUTER JOIN(select count(jct.batch_no) as regular_CT,jct.to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 0
+join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT'
+join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+where jc.oper_status is null group by jct.to_dept) D on D.to_dept = W.wrk_ctr_code
+group by W.wrk_ctr_code";
+
         // $sql="SELECT W.wrk_ctr_desc,W.wrk_ctr_code, ifnull(C.regular_RB,0) as regular_RB ,ifnull(D.regular_CT,0) as regular_CT,ifnull(A.urgent_RB,0)as urgent_RB ,ifnull(B.urgent_CT,0) as urgent_CT  FROM tb_o_workcenter  W
-        // LEFT OUTER JOIN(select count(jct.batch_no) as urgent_RB,ifnull(jct.to_dept,103021)as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 1
-        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' group by jct.to_dept) A on A.to_dept = W.wrk_ctr_code
-        // LEFT OUTER JOIN(select count(jct.batch_no) as urgent_CT,ifnull(jct.to_dept,103021)as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 1
-        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' group by jct.to_dept) B on B.to_dept = W.wrk_ctr_code
-        // LEFT OUTER JOIN(select count(jct.batch_no) as regular_RB,ifnull(jct.to_dept,103021)as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 0
-        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' group by jct.to_dept) C on C.to_dept = W.wrk_ctr_code
-        // LEFT OUTER JOIN(select count(jct.batch_no) as regular_CT,ifnull(jct.to_dept,103021)as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 0
-        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' group by jct.to_dept) D on D.to_dept = W.wrk_ctr_code
+        // LEFT OUTER JOIN(select count(jct.batch_no) as urgent_RB,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 1
+        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB'
+        // join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+        // WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) A on A.to_dept = W.wrk_ctr_code
+        // LEFT OUTER JOIN(select count(jct.batch_no) as urgent_CT,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 1
+        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT'
+        // join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+        // WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) B on B.to_dept = W.wrk_ctr_code
+        // LEFT OUTER JOIN(select count(jct.batch_no) as regular_RB,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 0
+        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB'
+        // join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+        // WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) C on C.to_dept = W.wrk_ctr_code
+        // LEFT OUTER JOIN(select count(jct.batch_no) as regular_CT,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 0
+        // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT'
+        // join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
+        // WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) D on D.to_dept = W.wrk_ctr_code
         // group by W.wrk_ctr_code";
-    
-
-        $sql="SELECT W.wrk_ctr_desc,W.wrk_ctr_code, ifnull(C.regular_RB,0) as regular_RB ,ifnull(D.regular_CT,0) as regular_CT,ifnull(A.urgent_RB,0)as urgent_RB ,ifnull(B.urgent_CT,0) as urgent_CT  FROM tb_o_workcenter  W
-        LEFT OUTER JOIN(select count(jct.batch_no) as urgent_RB,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 1
-        join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB'
-        join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
-        WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) A on A.to_dept = W.wrk_ctr_code
-        LEFT OUTER JOIN(select count(jct.batch_no) as urgent_CT,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 1
-        join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT'
-        join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
-        WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) B on B.to_dept = W.wrk_ctr_code
-        LEFT OUTER JOIN(select count(jct.batch_no) as regular_RB,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no  and tb_m_jobcard.urgent = 0
-        join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB'
-        join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
-        WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) C on C.to_dept = W.wrk_ctr_code
-        LEFT OUTER JOIN(select count(jct.batch_no) as regular_CT,ifnull(jct.to_dept,".$GLOBALS['wc_code'].")as to_dept from tb_m_jobcard join tb_t_job_status jct on jct.batch_no = tb_m_jobcard.batch_no   and tb_m_jobcard.urgent = 0
-        join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT'
-        join tb_t_job_card_trans jc on jc.batch_no = jct.batch_no and jc.present_dept = jct.to_dept
-        WHERE (date(jct.updated_at) between  DATE_FORMAT('2019-07-09' ,'%Y-%m-01') AND '2019-07-09' )group by jct.to_dept) D on D.to_dept = W.wrk_ctr_code
-        group by W.wrk_ctr_code";
-
-
-        
 
         $sqlRes=mysqli_query($con,$sql) or die('Error:'.mysqli_error($con));
         while ($row=mysqli_fetch_array($sqlRes)){
