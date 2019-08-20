@@ -233,18 +233,33 @@ function fillActualData($date){
     
     require '../common/db.php';
 
+    // $sql="SELECT W.wrk_ctr_desc,W.wrk_ctr_code, ifnull(C.regular_RB,0) as regular_RB ,ifnull(D.regular_CT,0) as regular_CT,ifnull(A.urgent_RB,0)as urgent_RB ,ifnull(B.urgent_CT,0) as urgent_CT FROM tb_o_workcenter  W
+    // LEFT OUTER JOIN(select count(jct.batch_no) as urgent_RB,jct.present_dept from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 1 and jct.status_code = 803
+    // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    // group by jct.present_dept) A on A.present_dept = W.wrk_ctr_code
+    // LEFT OUTER JOIN(select count(jct.batch_no) as urgent_CT,jct.present_dept,jct.updated_at from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 1 and jct.status_code = 803
+    // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    // group by jct.present_dept) B on B.present_dept = W.wrk_ctr_code and  B.present_dept = W.wrk_ctr_code
+    // LEFT OUTER JOIN(select count(jct.batch_no) as regular_RB,jct.present_dept from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 0 and jct.status_code = 803
+    // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    // group by jct.present_dept) C on C.present_dept = W.wrk_ctr_code
+    // LEFT OUTER JOIN(select count(jct.batch_no) as regular_CT,jct.present_dept from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 0 and jct.status_code = 803
+    // join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    // group by jct.present_dept) D on D.present_dept = W.wrk_ctr_code
+    // group by W.wrk_ctr_code";
+
     $sql="SELECT W.wrk_ctr_desc,W.wrk_ctr_code, ifnull(C.regular_RB,0) as regular_RB ,ifnull(D.regular_CT,0) as regular_CT,ifnull(A.urgent_RB,0)as urgent_RB ,ifnull(B.urgent_CT,0) as urgent_CT FROM tb_o_workcenter  W
     LEFT OUTER JOIN(select count(jct.batch_no) as urgent_RB,jct.present_dept from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 1 and jct.status_code = 803
-    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' WHERE date(jct.updated_at) = '".$date."' 
     group by jct.present_dept) A on A.present_dept = W.wrk_ctr_code
     LEFT OUTER JOIN(select count(jct.batch_no) as urgent_CT,jct.present_dept,jct.updated_at from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 1 and jct.status_code = 803
-    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' WHERE date(jct.updated_at) =  '".$date."' 
     group by jct.present_dept) B on B.present_dept = W.wrk_ctr_code and  B.present_dept = W.wrk_ctr_code
     LEFT OUTER JOIN(select count(jct.batch_no) as regular_RB,jct.present_dept from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 0 and jct.status_code = 803
-    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and  tb_m_fg.type = 'RB' WHERE date(jct.updated_at) =  '".$date."' 
     group by jct.present_dept) C on C.present_dept = W.wrk_ctr_code
     LEFT OUTER JOIN(select count(jct.batch_no) as regular_CT,jct.present_dept from tb_m_jobcard join tb_t_job_card_trans jct on jct.batch_no = tb_m_jobcard.batch_no  and jct.oper_status = '807' and tb_m_jobcard.urgent = 0 and jct.status_code = 803
-    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' WHERE (date(jct.updated_at) between  DATE_FORMAT('".$date."' ,'%Y-%m-01') AND '".$date."' )
+    join tb_m_fg on tb_m_jobcard.fg_code = tb_m_fg.fg_code and tb_m_fg.type = 'CT' WHERE date(jct.updated_at) =  '".$date."' 
     group by jct.present_dept) D on D.present_dept = W.wrk_ctr_code
     group by W.wrk_ctr_code";
 

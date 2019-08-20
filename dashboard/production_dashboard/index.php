@@ -206,26 +206,17 @@ reload:function(){
 getReasonDropdown:function(val,date,wc,process,hdate){
   debugger;
   // val = reasons in tb_t_prod_dash_h table
-
   var holiday = hdate;
 
   var getSelDate=$('#userDateSel').val();
-
-  var status=$('#status').text();
-  
-
-
+  var status=$('#status').text();  
 
   var aa = getDate.split("/");
   var bb = getSelDate.split("/");
   
-  
-
   var getSelDateNew = aa[2]+'-'+aa[1]+'-'+aa[0];
   var getDateNew = bb[2]+'-'+bb[1]+'-'+bb[0];
   
-
-
   const date11 = new Date(getSelDateNew);
   const date22 = new Date(getDateNew);
   const date33 = new Date(holiday);
@@ -314,27 +305,6 @@ openModel:function(date,wc,process){
 openModelWithView:function(date,wc,process,){
 
   $('#titleNameV').html(process);
-
-  //console.log(prodData);
-  
-  // var content='';
-  // for(var i=0;i<prodData.length;i++){
-  //   if(date==prodData[i].date && wc==prodData[i].work_ctr_code){
-      
-  //      var str = prodData[i].reasons;
-  //      var res = str.split(",");
-  //      for(var j=0;j<res.length;j++){
-  //       content+=' <span class="btn btn-primary" style="margin-bottom: 1%;">'+res[j]+'</span> &nbsp;';
-  //      }
-
-  //     $('#viewReasons').html(content);
-  //     $('#viewRemarks').html(prodData[i].remarks);   
-      
-  //     $('#prod_data').modal('show');
-
-  //   }
-  // }
-  
   var seletedDateRec=date;
   var seletedWcRec=wc;
 
@@ -470,11 +440,6 @@ fetchReasons:function(){
       $("#modaltableData").append(content);
       $("#viewReasonData").append(content);
 
-
-
-
-
-
       }
     });
 },
@@ -492,16 +457,37 @@ validateTime:function(){
   startdate = getSelDate + ' '+ sth +':'+stm + ':' + '00';
   enddate =  getSelDate + ' '+ edh +':'+edm + ':' + '00';
 
- if( startdate < enddate ) {
-  $('#endtimemsg').html('');
-  tempData.jobcard.saveReason();
- }else {
-  $('#endtimemsg').html("Start time is more than end time.!");
-  // alert("Start time is more than end time");
+  if( startdate < enddate ) {
+    $('#endtimemsg').html('');
+    tempData.jobcard.saveReason();
+  }else {
+    $('#endtimemsg').html("Start time is more than end time.!");
+    // alert("Start time is more than end time");
+  }
+
+ },
+ loadData:function(){
+
+  var date_=$('#userDateSel').val();
+  var res = date_.split("/");
+  var final_date=res[2]+"-"+res[1]+"-"+res[0];
+
+  var url='getDataController.php';
+  var myData ={loadData:"loadData",final_date:final_date}
+
+  $.ajax({
+      type:"POST",
+      url:url,
+      async: false,
+      cache: false,
+      data:JSON.stringify(myData),
+      contentType: 'application/json',
+      success: function(obj) {
+       //alert();
+      }
+    });
+
  }
-
-
-}
 
 };
 
@@ -544,6 +530,7 @@ $(document).ready(function() {
       
     tempData.jobcard.getProductionData();
     tempData.jobcard.loadTime();
+    tempData.jobcard.loadData();
    
 
     $('#upload_fg_form').on("submit", function(e) {
