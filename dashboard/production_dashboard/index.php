@@ -528,9 +528,10 @@ $(document).ready(function() {
     $("#generateJobCard").hide();
     $('#commonMsg').hide();
       
+    tempData.jobcard.loadData();
     tempData.jobcard.getProductionData();
     tempData.jobcard.loadTime();
-    tempData.jobcard.loadData();
+    
    
 
     $('#upload_fg_form').on("submit", function(e) {
