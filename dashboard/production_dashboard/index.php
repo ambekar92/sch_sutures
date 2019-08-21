@@ -88,6 +88,8 @@ loadTime:function(){
 },
 getProductionData:function(){
   
+  tempData.jobcard.loadData();
+  
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
     // var url="localhost/sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();
