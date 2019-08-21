@@ -89,7 +89,7 @@ loadTime:function(){
 getProductionData:function(){
   
   tempData.jobcard.loadData();
-  
+
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
     // var url="localhost/sutures_api/Jobcards/readprod_dash_filedata.php";
     var date_=$('#userDateSel').val();
@@ -469,6 +469,8 @@ validateTime:function(){
 
  },
  loadData:function(){
+  $('#load1').show();
+  $('#loadOnRefresh').prop('disabled', true);
 
   var date_=$('#userDateSel').val();
   var res = date_.split("/");
@@ -486,10 +488,13 @@ validateTime:function(){
       contentType: 'application/json',
       success: function(obj) {
        //alert();
+       $('#load1').hide();
+       $('#loadOnRefresh').prop('disabled', false);
       }
     });
 
  }
+
 
 };
 
@@ -530,7 +535,7 @@ $(document).ready(function() {
     $("#generateJobCard").hide();
     $('#commonMsg').hide();
       
-    tempData.jobcard.loadData();
+   // tempData.jobcard.loadData();
     tempData.jobcard.getProductionData();
     tempData.jobcard.loadTime();
     
@@ -779,10 +784,10 @@ function AlertFilesize_fg() {
                       <span class="glyphicon glyphicon-calendar"></span>               
                   </label>
               </div>   
-              <button type="button" onclick="tempData.jobcard.getProductionData();" 
+              <button type="button" id="loadOnRefresh" onclick="tempData.jobcard.getProductionData();" 
               class="btn btn-sm btn-primary pull-right" style="margin-top: -14%;">  
-               <i class="fa  fa-refresh"> </i>
-             </button>  
+               <i class="fa  fa-refresh"> </i>  
+             </button>   <i class="fa fa-spinner fa-pulse fa-3x fa-fw" id="load1"></i>
 
               </td>
             </tr>              
