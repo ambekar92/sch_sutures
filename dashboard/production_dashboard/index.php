@@ -88,7 +88,8 @@ loadTime:function(){
 },
 getProductionData:function(){
   
-  tempData.jobcard.loadData();
+  tempData.jobcard.fetchPrevDayData();
+  
 
     var url=baseURL+"/sutures_api/Jobcards/readprod_dash_filedata.php";
     // var url="localhost/sutures_api/Jobcards/readprod_dash_filedata.php";
@@ -490,6 +491,29 @@ validateTime:function(){
        //alert();
        $('#load1').hide();
        $('#loadOnRefresh').prop('disabled', false);
+      }
+    });
+ }
+
+ fetchPrevDayData:function(){  
+
+  var date_=$('#userDateSel').val();
+  var res = date_.split("/");
+  var final_date=res[2]+"-"+res[1]+"-"+res[0];
+
+  var url=baseURL+'/sutures_api/Jobcards/readprod_dash_data_update.php';
+  var myData ={date:final_date}
+
+  $.ajax({
+      type:"POST",
+      url:url,
+      async: false,
+      cache: false,
+      data:JSON.stringify(myData),
+      contentType: 'application/json',
+      success: function(obj) {
+        alert();
+        tempData.jobcard.loadData();  
       }
     });
 
