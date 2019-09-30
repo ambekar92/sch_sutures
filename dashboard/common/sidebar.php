@@ -57,7 +57,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          <li><a href="../report" id="monthlyrejection"><i class="fa fa-list-alt"></i>Monthly Rejection</a> </li>
+          <li><a href="../rejection_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Monthly Rejection</a> </li>
           <li><a href="../report" id="report"><i class="fa fa-list-alt"></i>Jobcard Rejection </a> </li>
           <li><a href="../jobcard_reject" id="JobCard_rej"><i class="fa fa-list-alt"></i>Reject Reasons</a> </li>
           </ul>
