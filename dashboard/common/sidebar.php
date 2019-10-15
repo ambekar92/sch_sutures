@@ -81,6 +81,19 @@
           </ul>
          </li> 
 
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cubes"></i> <span>Consumables Analysis</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../consumables_dept_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Department Analysis</a> </li>
+          <li><a href="../consumables_resns_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Reasons Analysis</a> </li>
+          </ul>
+        </li>
+
 
          <li class="treeview">
           <a href="#">
