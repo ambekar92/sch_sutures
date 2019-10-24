@@ -146,6 +146,17 @@
           </ul>
          </li> 
 
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-phone-square"></i> <span>SCH Support Deskp</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="https://support.supplychainh.com" id="oee-dashboard" target="_blank"><i class="fa fa-phone-square"></i>Support Deskp</a> </li>
+          </ul>
+         </li> 
 
        
       </ul>
