@@ -152,7 +152,7 @@ if(isset($data['loadData'])){
     fillActualData($final_date);
     fillStockData($final_date);
     monthlyProduction($final_date,$monthly_man_hours);
-    lastMonthProduction($final_date,$last_month_man_hours);
+    //lastMonthProduction($final_date,$monthly_man_hours);
 
 }
 

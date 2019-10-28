@@ -39,8 +39,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../report" id="report"><i class="fa fa-list-alt"></i>Jobcard Rejection </a> </li>
-            <li><a href="../jobcard_reject" id="JobCard_rej"><i class="fa fa-list-alt"></i>Reject Reasons</a> </li>
+            
             <li><a href="../department" id="machine_jobcard"><i class="fa fa-list-alt"></i>Department</a> </li>
             <li><a href="../machine_report" id="machine_jobcard"><i class="fa fa-list-alt"></i>Machine-Jobcards</a> </li>
             <li><a href="../ageing" id="ageing"><i class="fa fa-list-alt"></i>Ageing Report</a></li>  
@@ -49,6 +48,21 @@
             <li><a href="../operator_efficiency" id="operator_efficiency"><i class="fa fa-list-alt"></i>Operator Efficiency</a></li>    
           </ul>
          </li> 
+
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-window-close-o"></i> <span>Rejection Analysis</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../yearly_rejections" id="monthlyrejection"><i class="fa fa-list-alt"></i>Yearly Rejection</a> </li>
+          <li><a href="../rejection_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Monthly Rejection</a> </li>
+          <li><a href="../report" id="report"><i class="fa fa-list-alt"></i>Jobcard Rejection </a> </li>
+          <li><a href="../jobcard_reject" id="JobCard_rej"><i class="fa fa-list-alt"></i>Reject Reasons</a> </li>
+          </ul>
+        </li>
 
 
 
@@ -66,6 +80,19 @@
           <li><a href="../reason_report" id="reason_report"><i class="fa fa-list-alt"></i>Reason Report</a> </li>
           </ul>
          </li> 
+
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cubes"></i> <span>Consumables Analysis</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../consumables_dept_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Department Analysis</a> </li>
+          <li><a href="../consumables_resns_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Reasons Analysis</a> </li>
+          </ul>
+        </li>
 
 
          <li class="treeview">
