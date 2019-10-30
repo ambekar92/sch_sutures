@@ -24,7 +24,7 @@
           </a>
           <ul class="treeview-menu">
           <li><a href="../overview" id="report"><i class="fa fa-line-chart"></i> Overview</a></li>
-          <li><a href="../analytics" id="report"><i class="fa fa-line-chart"></i> Dashboard</a></li>
+          <li><a href="../analytics" id="report"><i class="fa fa-line-chart"></i> Jobcard Analytics</a></li>
           <li><a href="../jobcard/index.php" id="menuJobCardScreen"><i class="fa fa-qrcode"></i> JobCard</a></li>
           <li><a href="../logout.php" id="logout"><i class="fa fa-sign-out"></i>Logout</a></li>
           </ul>

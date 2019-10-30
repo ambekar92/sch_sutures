@@ -217,12 +217,15 @@ include('env_variables.php');
       <!-- Sidebar toggle button-->
       <a href="index.php" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
-      </a>
+      </a> 
+      <!-- <a href="index.php" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a> -->
 
 
     <div class="col-md-10 Headtitle text-center">  
       <span class="product_title">smartFactory Dashboard</span><br>
-      <span class="company_title" id="compNameDB"></span>
+      <a href="/dashboard/routemap"><span class="company_title" id="compNameDB"></span></a>
     </div>
 
     <div class="col-md-2" style=" margin-left: -6%;">  
