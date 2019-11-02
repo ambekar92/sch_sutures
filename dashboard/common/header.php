@@ -225,7 +225,7 @@ include('env_variables.php');
 
     <div class="col-md-10 Headtitle text-center">  
       <span class="product_title">smartFactory Dashboard</span><br>
-      <a href="/dashboard/routemap"><span class="company_title" id="compNameDB"></span></a>
+      <a href="/sch_sutures/dashboard/routemap"><span class="company_title" id="compNameDB"></span></a>
     </div>
 
     <div class="col-md-2" style=" margin-left: -6%;">  
