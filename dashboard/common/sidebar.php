@@ -41,6 +41,7 @@
           <ul class="treeview-menu">
             
             <li><a href="../department" id="machine_jobcard"><i class="fa fa-list-alt"></i>Department</a> </li>
+            <li><a href="../department_monthly" id="machine_jobcard"><i class="fa fa-list-alt"></i>Department Monthly</a> </li>
             <li><a href="../machine_report" id="machine_jobcard"><i class="fa fa-list-alt"></i>Machine-Jobcards</a> </li>
             <li><a href="../ageing" id="ageing"><i class="fa fa-list-alt"></i>Ageing Report</a></li>  
             <li><a href="../jobcard_status" id="jobcard_status"><i class="fa fa-list-alt"></i>Jobcard Status</a></li>
@@ -63,7 +64,6 @@
           <li><a href="../jobcard_reject" id="JobCard_rej"><i class="fa fa-list-alt"></i>Reject Reasons</a> </li>
           </ul>
         </li>
-
 
 
          <li class="treeview">
