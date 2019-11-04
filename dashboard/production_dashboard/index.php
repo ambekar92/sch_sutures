@@ -493,7 +493,7 @@ validateTime:function(){
        $('#loadOnRefresh').prop('disabled', false);
       }
     });
- }
+  },
 
  fetchPrevDayData:function(){  
 
@@ -512,7 +512,7 @@ validateTime:function(){
       data:JSON.stringify(myData),
       contentType: 'application/json',
       success: function(obj) {
-        alert();
+        // alert();
         tempData.jobcard.loadData();  
       }
     });
