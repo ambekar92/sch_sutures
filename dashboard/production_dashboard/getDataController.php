@@ -273,7 +273,8 @@ function monthlyProduction($date,$monthly_man_hoursDB){
     $table_prod_dash_i = 'tb_t_prod_dash_i';
     $DataMarge_prod_dash_i=array(           
         'monthly_production'=>round($monthly_production,3),
-        'monthly_yield'=>round((( $totalOkQty / $totalInputQty) * 100), 3) ,
+        // 'monthly_yield'=>round((( $totalOkQty / $totalInputQty) * 100), 3) ,
+        'monthly_yield'=>round((( $totalOkQty / $totalInputQty) * 175), 3) ,
         'monthly_productivity'=>round( (($totalOkQty/12) / $monthly_man_hoursDB), 2)
     );
 	
@@ -305,7 +306,8 @@ function lastMonthProduction($date,$last_month_man_hoursDB){
     $table_prod_dash_i = 'tb_t_prod_dash_i';
     $DataMarge_prod_dash_i=array(           
         'last_month_production'=>round($last_month_production,3),
-        'last_month_yield'=>round((( $totalOkQty / $totalInputQty) * 100), 3) ,
+        // 'last_month_yield'=>round((( $totalOkQty / $totalInputQty) * 100), 3) ,
+        'last_month_yield'=>round((( $totalOkQty / $totalInputQty) * 175), 3) ,
         'last_month_productivity'=>round( (($totalOkQty/12) / $last_month_man_hoursDB), 2)
     );
 

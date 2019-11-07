@@ -117,7 +117,7 @@ var root = {
             "children": [{
             "name": "Dashboard",
         }, {
-            "name": "Hostory",
+            "name": "History",
         }]
     }, {
         "name": "SCH Support Desk",
