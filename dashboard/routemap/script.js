@@ -9,7 +9,7 @@ height = 800 - margin.top - margin.bottom;
 
 
 var root = {
-    "name": "Healthium",
+    "name": "Screen Navigation",
         "children": [{
         "name": "Dashboard",
             "children": [{
