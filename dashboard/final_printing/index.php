@@ -135,11 +135,18 @@ var t='';
     //   s="Siliconize";
     // }  
 
+
     if(true_pass==1){
-      t="Truepass"
-    }       
+      t="TRUEPASS"
+    }else if(Siliconize==1){
+      t="SILICONIZE"
+    }else{
+      t="-"
+    }
 
    var res = batch_no.split("_");
+
+  //  alert(t);
 
   var cardType=t;
   //var series="300S";
@@ -149,7 +156,7 @@ var t='';
   params += ', top=0, left=0'
   params += ', fullscreen=yes,scrollbars: 0';
    
-   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
+   var baseUrl ="http://<?php echo $_SERVER['HTTP_HOST']; ?>/sch_sutures/dashboard/final_printing/jobQRcode.php?ok="+ok_qty+"&batch="+res[0]+"&cardType="+cardType+"&series="+series+"&fgcode="+fg_code;
 
 console.log(baseUrl);
    window.open(baseUrl, "MsgWindow", params);

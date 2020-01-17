@@ -54,7 +54,7 @@ for(var i=1;i<=num_of_cards;i++){
   content+= '<div class="col-md-2 col-xs-12 outside">'+
             '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
             '<p class="fgCode">'+fgcode +'</p>'+
-            '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
+            '<p class="truePass">'+ cardType + '<span> '+series+'</span></p>'+
             '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
             '<p class="qtyDoz">'+'Qty : 10 DOZ'+'</p>'+
             '</div>'+
@@ -70,7 +70,7 @@ debugger;
     content+=  '<div class="col-md-2 col-xs-12 outside">'+
             '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
             '<p class="fgCode">'+fgcode +'</p>'+
-            '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
+            '<p class="truePass">'+ cardType + '<span> '+series+'</span></p>'+
             '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
             '<p class="qtyDoz">'+'Qty : '+decimalCard+' DOZ</p>'+
             '</div>'+
@@ -83,7 +83,7 @@ debugger;
   content+=  '<div class="col-md-2 col-xs-12 outside">'+
           '<div class="col-md-10 col-xs-10 inside_large" id="qrcode" style="margin-top: 4%;">'+
           '<p class="fgCode">'+fgcode +'</p>'+
-          '<p class="truePass">'+ 'TRUEPASS' + '<span> '+series+'</span></p>'+
+          '<p class="truePass">'+ cardType + '<span> '+series+'</span></p>'+
           '<p class="qtyDoz">Batch : <b>'+batch+'</b></p>'+
           '<p class="qtyDoz">'+'Qty : '+parseInt(doz)+' DOZ</p>'+
           '</div>'+
@@ -100,7 +100,10 @@ reload:function(){
 	   location.reload(true);
 },
 
+echo "elfihe";
+
 updateStatus:function(){
+
 
 var url="getDataController.php";
 var batch="<?php echo $_GET['batch']; ?>";

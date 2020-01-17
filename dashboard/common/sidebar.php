@@ -15,6 +15,20 @@
       </div>
       <ul class="sidebar-menu" data-widget="tree" id="myUL">
        <!--  <li class="header">MAIN NAVIGATION</li> -->
+       <li class="treeview">
+          <a href="#">
+            <i class="fa fa-line-chart"></i> <span>OEE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../oee/" id="oee-dashboard"><i class="fa fa-line-chart"></i>Dashboard</a> </li>
+          <li><a href="../oee/oee_history.php" id="oee_history"><i class="fa fa-history"></i>History</a> </li>
+          </ul>
+         </li>
+
+         
         <li class="treeview">
           <a href="#">
             <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
@@ -46,7 +60,8 @@
             <li><a href="../ageing" id="ageing"><i class="fa fa-list-alt"></i>Ageing Report</a></li>  
             <li><a href="../jobcard_status" id="jobcard_status"><i class="fa fa-list-alt"></i>Jobcard Status</a></li>
             <li><a href="../operator_report" id="operator_report"><i class="fa fa-list-alt"></i>Operator</a></li> 
-            <li><a href="../operator_efficiency" id="operator_efficiency"><i class="fa fa-list-alt"></i>Operator Efficiency</a></li>    
+            <li><a href="../operator_efficiency" id="operator_efficiency"><i class="fa fa-list-alt"></i>Operator Efficiency</a></li> 
+          <li><a href="../batch_stop_status" id="view_dashboard"><i class="fa fa-list-alt"></i>Batch Status</a> </li> 
           </ul>
          </li> 
 
@@ -107,6 +122,19 @@
 
           </ul>
          </li> 
+<!-- 
+         <li class="treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Batch Stop Status</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../batch_stop_status" id="view_dashboard"><i class="fa fa-list-alt"></i>Batch Status</a> </li>
+
+          </ul>
+         </li>  -->
 
          <li class="treeview">
           <a href="#">
@@ -133,20 +161,9 @@
           </ul>
          </li> 
 
-         <li class="treeview">
-          <a href="#">
-            <i class="fa fa-line-chart"></i> <span>OEE</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-          <li><a href="../oee/" id="oee-dashboard"><i class="fa fa-line-chart"></i>Dashboard</a> </li>
-          <li><a href="../oee/oee_history.php" id="oee_history"><i class="fa fa-history"></i>History</a> </li>
-          </ul>
-         </li> 
+      
 
-         <li class="treeview">
+         <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-phone-square"></i> <span>SCH Support Deskp</span>
             <span class="pull-right-container">
@@ -156,7 +173,7 @@
           <ul class="treeview-menu">
           <li><a href="https://support.supplychainh.com" id="oee-dashboard" target="_blank"><i class="fa fa-phone-square"></i>Support Deskp</a> </li>
           </ul>
-         </li> 
+         </li>  -->
 
        
       </ul>
