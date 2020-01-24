@@ -10,13 +10,13 @@ if(!isset($_SESSION['schAdminSession'])) {
 }
 
 ?>
+<script src="https://docs.smartkarrot.com/frameworks/web/v4/UsageAnalytics.js"></script>
 
 
 <script type="text/javascript">
 $(document).ready(function() {
 
-  setTimeout(function(){ $(".loader").fadeOut("slow"); }, 7);
-
+  setTimeout(function(){ $(".loader").fadeOut("slow"); }, 7);  
   
   var userMail="<?php echo $_SESSION['schAdminSession'] ?>";
   var pass="<?php echo $_SESSION['schAdminRole'] ?>";
@@ -33,15 +33,7 @@ $(document).ready(function() {
     success: function(obj) {
         debugger;
         if(obj.userDetails !=null){
- 			
-        	// for (var i=0; i < obj.allScreenArr.length ; i++) {
-        	// 	$('#'+obj.allScreenArr[i]).hide();
-        	// }	
-
-        	// for (var i=0; i < obj.screenArr.length ; i++) {
-        	// 	$('#'+obj.screenArr[i]).show();
-        	// }
-         	
+ 			         	
             $('#comp_code').val(obj.userDetails.comp_code);
          	  //$('#comp_id').val(obj.userDetails.company_id);
           	$('#compNameDB').html(obj.userDetails.comp_desc);
@@ -80,6 +72,14 @@ $(document).ready(function() {
           // }else{
             
           // }
+  UsageAnalytics.configure("ad9c7590-8210-4c69-970c-e9e5a688278e");
+  UsageAnalytics.setUser(obj.userDetails.emp_id, "sutures-eims");
+
+          
+UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.userId, obj.userDetails.emp_id);
+UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.name, obj.userDetails.frst_name);
+UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.designation,obj.userDetails.designation);
+
 
         }else{
          

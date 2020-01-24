@@ -690,6 +690,18 @@ getSearchData:function(){
         GJobCardData=null;
            GJobCardData = obj.jobPoDetails;
            tempData.jobcard.loadSearchTable(obj.jobPoDetails);
+
+            var eventParams = {
+              "Module" : "Jobcard Search", // Standard Event Attribute
+              "customer_name":customer_name,
+              "size_fg":size_fg,
+              "Required Date":s_to+' to '+s_from,
+              "Batch_no":batch_no,
+              "plan":plan
+            }
+            //UsageAnalytics.logEvent("Search Jobcard", eventParams); 
+            UsageAnalytics.logEvent("Search Details", eventParams);
+
         } 
     });
   },
@@ -1057,10 +1069,17 @@ date.setDate(date.getDate());
 
 
  $('#createReasons').click(function(){
+   debugger;
     $('#searchJobCardID').hide();
    	tempData.jobcard.clearForm();  
     $('#userDateSel').datepicker('setDate', today);
     $('#plan').datepicker('setDate', today);
+
+    var eventParams = {
+      "Module" : "Jobcard", // Standard Event Attribute
+    }
+    //UsageAnalytics.logEvent("Search Jobcard", eventParams); 
+    UsageAnalytics.logEvent("Generate Jobcard", eventParams); 
  });
 
 $('#searchJobCard').click(function(){
@@ -1068,6 +1087,13 @@ $('#searchJobCard').click(function(){
   tempData.jobcard.searchClearJobCard();
   $('#s_to').datepicker('setDate', today);
   $('#s_from').datepicker('setDate', today);
+
+    var eventParams = {
+      "Module" : "Jobcard", // Standard Event Attribute
+    }
+    UsageAnalytics.logEvent("Search Jobcard", eventParams); 
+    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
+
 });
 
  $('#reason_type_id').change(function(){

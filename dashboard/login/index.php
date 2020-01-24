@@ -59,6 +59,10 @@ if(isset($_SESSION['schAdminSession'])) {
     border-radius: 10px;}
 </style>
 
+
+<script src="https://docs.smartkarrot.com/frameworks/web/v4/UsageAnalytics.js"></script>
+
+
 <script type="text/javascript">
 //window.history.forward();
 
@@ -102,6 +106,7 @@ getLogin:function(){
               $('#status3').hide();
               $('#status1').hide();
               $('#status2').slideDown(600);
+             
             }
 
 
@@ -122,7 +127,9 @@ getLogin:function(){
 };
 
 $(document).ready(function() {
-
+  
+  UsageAnalytics.resetUser();
+  
 
   $('.login-block').css({ height: $(window).innerHeight() });
   $(window).resize(function(){
