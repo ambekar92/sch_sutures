@@ -2,8 +2,8 @@
 
 //$prodBaseURL="http://172.16.16.161";
 //$prodBaseURL="https://sutures.supplychainh.com";
-//  $prodBaseURL="http://localhost/S/Dashboards";
-$prodBaseURL="http://172.16.16.158/";
+ $prodBaseURL="http://localhost/";
+// $prodBaseURL="http://172.16.16.23/";
 // $prodBaseURL="http://172.16.16.158/sch_sutures/dashboard/";
 // $prodBaseURL="http://localhost/S/Dashboards/";
 

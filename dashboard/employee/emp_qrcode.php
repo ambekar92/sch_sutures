@@ -118,7 +118,13 @@ getDateFormate:function(date){  // DB formate date and time to dd-mm-yyyy
 };
 
 $(document).ready(function() {
-    debugger;
+
+    var eventParams = {
+      "Module" : "Employee", // Standard Event Attribute
+    }
+    UsageAnalytics.logEvent("Employee QR Code", eventParams); 
+    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
+
 
     $("#menuJobCardScreen").parent().addClass('active');
     $("#menuJobCardScreen").parent().parent().closest('.treeview').addClass('active menu-open');

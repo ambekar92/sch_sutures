@@ -51,4 +51,14 @@ $(document).ready(function() {
       <!-- /.content -->
   </div>
 
+  <script>
+    $(document).ready(function() {
+    var eventParams = {
+      "Module" : "Checklist Approval", // Standard Event Attribute
+    }
+    UsageAnalytics.logEvent("Checklists", eventParams); 
+    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
+    });
+  </script>
+
 

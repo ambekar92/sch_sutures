@@ -36,5 +36,15 @@
     <!-- /.content -->
   </div>
 
+  <script>
+    $(document).ready(function() {
+    var eventParams = {
+      "Module" : "Consumables", // Standard Event Attribute
+    }
+    UsageAnalytics.logEvent("Reasons Analysis", eventParams); 
+    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
+    });
+  </script>
+
 
 

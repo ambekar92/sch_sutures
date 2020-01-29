@@ -172,6 +172,13 @@ console.log(baseUrl);
 $(document).ready(function() {
 
 
+    var eventParams = {
+      "Module" : "Label Printing", // Standard Event Attribute
+    }
+    UsageAnalytics.logEvent("Printing", eventParams); 
+    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
+
+
     $('#getTableContent').DataTable();
 
     $("#final_printing").parent().addClass('active');

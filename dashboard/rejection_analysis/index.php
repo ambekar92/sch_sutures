@@ -36,5 +36,15 @@
     <!-- /.content -->
   </div>
 
+  <script>
+    $(document).ready(function() {
+    var eventParams = {
+      "Module" : "Rejection Analysis", // Standard Event Attribute
+    }
+    UsageAnalytics.logEvent("Monthly Rejection", eventParams); 
+    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
+    });
+  </script>
+
 
 
