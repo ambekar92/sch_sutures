@@ -523,15 +523,6 @@ validateTime:function(){
 };
 
 $(document).ready(function() {
-
-
-    var eventParams = {
-      "Module" : "Production", // Standard Event Attribute
-    }
-    UsageAnalytics.logEvent("Dashboard", eventParams); 
-    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
-
-
     debugger;
     $("#view_dashboard").parent().addClass('active');
     $("#view_dashboard").parent().parent().closest('.treeview').addClass('active menu-open');

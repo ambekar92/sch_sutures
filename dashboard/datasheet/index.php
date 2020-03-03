@@ -36,14 +36,4 @@
       <!-- /.content -->
   </div>
 
-  <script>
-    $(document).ready(function() {
-    var eventParams = {
-      "Module" : "Production", // Standard Event Attribute
-    }
-    UsageAnalytics.logEvent("Data Sheet", eventParams); 
-    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
-    });
-  </script>
-
 

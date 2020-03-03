@@ -39,13 +39,3 @@
         </div>       
       <!-- /.content -->
   </div>
-
-  <script>
-    $(document).ready(function() {
-    var eventParams = {
-      "Module" : "Employee", // Standard Event Attribute
-    }
-    UsageAnalytics.logEvent("Employee List", eventParams); 
-    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
-    });
-  </script>

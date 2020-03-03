@@ -36,15 +36,5 @@
     <!-- /.content -->
   </div>
 
-  <script>
-    $(document).ready(function() {
-    var eventParams = {
-      "Module" : "OEE", // Standard Event Attribute
-    }
-    UsageAnalytics.logEvent("OEE History", eventParams); 
-    //UsageAnalytics.logEvent("Generate Jobcard", eventParams);
-    });
-  </script>
-
 
 
