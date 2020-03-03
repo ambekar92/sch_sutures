@@ -80,6 +80,18 @@
           </ul>
         </li>
 
+        <li class="treeview">
+          <a href="#">
+          <i class="fa fa-history"></i></i> <span>Rework Analysis</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          <li><a href="../yearly_reworks" id="monthlyrejection"><i class="fa fa-list-alt"></i>Yearly Rework</a> </li>
+          <li><a href="../rework_analysis" id="monthlyrejection"><i class="fa fa-list-alt"></i>Monthly Rework</a> </li>
+          </ul>
+        </li>
 
          <li class="treeview">
           <a href="#">
