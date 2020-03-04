@@ -12,7 +12,7 @@ if(isset($_POST['userDetails'])){
 
     
     $eqQ="SELECT e.emp_id,e.role_code,e.frst_name,e.designation,p.plnt_code,p.plnt_s_desc,p.plnt_desc, c.comp_code,c.comp_desc  FROM tb_m_employee e, tb_o_plant p,tb_o_company c 
-            WHERE e.emp_id='".$userMail."' and e.password='".$tokenPass."' 
+            WHERE e.card_id='".$userMail."' and e.password='".$tokenPass."' 
             and e.plnt_code=p.plnt_code and p.comp_code=c.comp_code";
 
     $userDetailRes=mysqli_query($con,$eqQ) or die('Error:'.mysqli_error($con));

@@ -35,7 +35,7 @@ $(document).ready(function() {
         if(obj.userDetails !=null){
  			         	
             $('#comp_code').val(obj.userDetails.comp_code);
-         	  //$('#comp_id').val(obj.userDetails.company_id);
+         	  //$('#comp_id').val(obj.userDetails.company_id);  
           	$('#compNameDB').html(obj.userDetails.comp_desc);
             $('#sidebarUserName').html(obj.userDetails.frst_name);
           	$('#sidebarUserDes').html(obj.userDetails.designation);
@@ -55,30 +55,31 @@ $(document).ready(function() {
           	// }
 
             $('#plant_id').val(obj.userDetails.plnt_code);
-
             $('#userID').val(obj.userDetails.emp_id);
             $('#userName').val(obj.userDetails.frst_name);
-
             $('#testIdName').val(obj.userDetails.emp_id+"="+obj.userDetails.frst_name);
-             //$('#workCenter_id').val(1);
-          
-          /* Role Configuration */
-         	/*$('#adminRole').val(obj.userDetails.rolename);
-         	$('#companyName').val(obj.userDetails.company_id);*/
 
           /* Handel Home Page*/
-          // if(obj.userDetails.code=='EIMS'){
+          if(obj.userDetails.role_code=='101'){
+            $("#menu_oee").hide();
+            $("#menu_dashboard").hide();
+            $("#menu_reports").hide();
+            $("#menu_rejection").hide();
+            $("#menu_rework").hide(); 
+            $("#menu_production").hide();
+            $("#menu_consumables").hide();
+            $("#menu_checklist").hide();
+            $("#menu_emp").hide();
+            $("#menu_labelprint").show();
+          }
 
-          // }else{
-            
-          // }
-  UsageAnalytics.configure("ad9c7590-8210-4c69-970c-e9e5a688278e");
-  UsageAnalytics.setUser(obj.userDetails.emp_id, "sutures-eims");
+// UsageAnalytics.configure("ad9c7590-8210-4c69-970c-e9e5a688278e");
+// UsageAnalytics.setUser(obj.userDetails.emp_id, "sutures-eims");
 
           
-UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.userId, obj.userDetails.emp_id);
-UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.name, obj.userDetails.frst_name);
-UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.designation,obj.userDetails.designation);
+// UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.userId, obj.userDetails.emp_id);
+// UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.name, obj.userDetails.frst_name);
+// UsageAnalytics.setUserAttribute(UsageAnalytics.UserAttribute.designation,obj.userDetails.designation);
 
 
         }else{

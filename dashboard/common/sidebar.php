@@ -1,3 +1,14 @@
+ <style>
+ .user-panel{
+   height:100px !important;
+ }
+
+ .user-panel > .info > a {
+   color:black !important;
+ }
+ }
+ </style>
+ 
  <!-- Left side column. contains the logo and sidebar //style="position: fixed;" -->
   <aside class="main-sidebar" >
     <!-- sidebar: style can be found in sidebar.less -->
@@ -9,13 +20,15 @@
         </div>
         <div class="pull-left info">
           <p id="sidebarUserName"></p>
-          <small id="sidebarUserDes"></small>
-          <!-- <a href="../logout.php">Logout <i class="fa fa-sign-out"></i></a>  -->
+          <small id="sidebarUserDes"></small><br> <br> 
+           <a class="btn btn-xs btn-danger" href="../logout.php">Logout <i class="fa fa-sign-out"></i></a>  
         </div>
+       
       </div>
       <ul class="sidebar-menu" data-widget="tree" id="myUL">
        <!--  <li class="header">MAIN NAVIGATION</li> -->
-       <li class="treeview">
+
+       <li class="treeview" id="menu_oee">
           <a href="#">
             <i class="fa fa-line-chart"></i> <span>OEE</span>
             <span class="pull-right-container">
@@ -29,7 +42,7 @@
          </li>
 
          
-        <li class="treeview">
+        <li class="treeview" id="menu_dashboard">
           <a href="#">
             <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -40,12 +53,12 @@
           <li><a href="../overview" id="report"><i class="fa fa-line-chart"></i> Overview</a></li>
           <li><a href="../analytics" id="report"><i class="fa fa-line-chart"></i> Jobcard Analytics</a></li>
           <li><a href="../jobcard/index.php" id="menuJobCardScreen"><i class="fa fa-qrcode"></i> JobCard</a></li>
-          <li><a href="../logout.php" id="logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+          <!-- <li><a href="../logout.php" id="logout"><i class="fa fa-sign-out"></i>Logout</a></li> -->
           </ul>
         </li>
 
 
-        <li class="treeview">
+        <li class="treeview" id="menu_reports">
           <a href="#">
             <i class="fa fa-book"></i> <span>Reports</span>
             <span class="pull-right-container">
@@ -65,7 +78,7 @@
           </ul>
          </li> 
 
-         <li class="treeview">
+         <li class="treeview" id="menu_rejection">
           <a href="#">
             <i class="fa fa-window-close-o"></i> <span>Rejection Analysis</span>
             <span class="pull-right-container">
@@ -80,7 +93,7 @@
           </ul>
         </li>
 
-        <li class="treeview">
+        <li class="treeview" id="menu_rework">
           <a href="#">
           <i class="fa fa-history"></i></i> <span>Rework Analysis</span>
             <span class="pull-right-container">
@@ -93,7 +106,7 @@
           </ul>
         </li>
 
-         <li class="treeview">
+         <li class="treeview" id="menu_production">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Production</span>
             <span class="pull-right-container">
@@ -108,7 +121,7 @@
           </ul>
          </li> 
 
-         <li class="treeview">
+         <li class="treeview" id="menu_consumables">
           <a href="#">
             <i class="fa fa-cubes"></i> <span>Consumables</span>
             <span class="pull-right-container">
@@ -122,7 +135,7 @@
         </li>
 
 
-         <li class="treeview">
+         <li class="treeview" id="menu_checklist">
           <a href="#">
             <i class="fa fa-list"></i> <span>Checklist Approval</span>
             <span class="pull-right-container">
@@ -148,7 +161,7 @@
           </ul>
          </li>  -->
 
-         <li class="treeview">
+         <li class="treeview" id="menu_emp">
           <a href="#">
             <i class="fa fa-users"></i> <span>Employee</span>
             <span class="pull-right-container">
@@ -161,7 +174,7 @@
           </ul>
          </li> 
 
-         <li class="treeview">
+         <li class="treeview" id="menu_labelprint">
           <a href="#">
             <i class="fa fa-qrcode"></i> <span>Label Printing</span>
             <span class="pull-right-container">
