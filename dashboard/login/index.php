@@ -94,9 +94,17 @@ getLogin:function(){
               $('#status1').slideDown(600);
                 $('#status2').hide();
                 $('#status3').hide();
-                window.setTimeout(function () { 
+
+                if(obj.login.data.role_code=='101'){
+                  window.setTimeout(function () { 
+                  window.location='../final_printing';
+                },1000);
+                }else{
+                  window.setTimeout(function () { 
                   window.location='../overview';
                 },1000);
+                }
+               
             }else if(obj.login.infoRes=="D"){
                 $('#status3').slideDown(600);
                 $('#status1').hide();

@@ -99,12 +99,7 @@ debugger;
 reload:function(){
 	   location.reload(true);
 },
-
-echo "elfihe";
-
 updateStatus:function(){
-
-
 var url="getDataController.php";
 var batch="<?php echo $_GET['batch']; ?>";
 var myData = {updateStatus:"updateStatus", batch:batch};

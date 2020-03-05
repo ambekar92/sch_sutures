@@ -37,9 +37,15 @@ if(isset($_POST['getLogin'])){
 				$comp_code = $row['comp_code'];
 				$comp_desc = $row['comp_desc'];
 
+				$userData=array('emp_id' =>$emp_id,
+								'role_code' =>$role_code,
+								'frst_name' =>$frst_name
+								);
+
 				$msg="User is Activated";
                 $response['info']=$msg;
-                $response['infoRes']='A'; //Activated
+				$response['infoRes']='A'; //Activated
+				$response['data']=$userData;
                 
 				$_SESSION['schAdminSession'] = $email;
 				$_SESSION['schAdminRole'] = $password;
